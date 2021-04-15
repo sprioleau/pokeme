@@ -3,6 +3,7 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const autoprefixer = require("autoprefixer");
 const postcssPresets = require("postcss-preset-env");
+const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
 const env = process.env.NODE_ENV || "development";
 // set to 'production' or 'development' in your env
@@ -50,7 +51,7 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.(jpe?g|png|gif|svg)$/,
+				test: /\.(jpe?g|png|gif|svg|ico)$/,
 				use: [
 					{
 						loader: "file-loader",
@@ -71,6 +72,13 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: "./src/index.html",
 			filename: "./index.html",
+		}),
+		new ImageminPlugin({
+			disable: process.env.NODE_ENV !== "production", // Disable during development
+			pngquant: {
+				quality: "95-100",
+			},
+			svgo: {},
 		}),
 	],
 };
