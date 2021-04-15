@@ -8,6 +8,8 @@ _This page displays a logo and tells you how long you've spent on the page._
 
 Deployed URL: [really-useful-timer.netlify.app](https://really-useful-timer.netlify.app)
 
+![Hero image](https://raw.githubusercontent.com/dartmouth-cs52-21S/starterpack-sprioleau/main/src/images/screenshots/hero-section.gif?token=ALX67XCBIXXLEQSI3Y46PK3AQFWLM)
+
 ## What Worked Well
 
 - Followed short assignment instructions to get ESLint, Babel, Webpack and NPM installed correctly
