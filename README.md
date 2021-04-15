@@ -1,6 +1,6 @@
 # Really Useful Timer
 
-![really useful timer logo](https://really-useful-timer.netlify.app/rut-logo.svg =250x)
+![really useful timer logo](https://really-useful-timer.netlify.app/rut-logo.svg)
 
 _This page displays a logo and tells you how long you've spent on the page._
 
@@ -8,7 +8,7 @@ _This page displays a logo and tells you how long you've spent on the page._
 
 Deployed URL: [really-useful-timer.netlify.app](https://really-useful-timer.netlify.app)
 
-<img src="https://qithub.com/dartmouth-cs52-21S/starterpack-sprioleau/blob/main/src/images/screenshots/hero-section.gif?raw=true" alt="Hero section GIF">
+<img src="https://github.com/dartmouth-cs52-21S/starterpack-sprioleau/blob/main/src/images/screenshots/hero-section.gif?raw=true" alt="Hero section GIF">
 
 ## What Worked Well
 
