@@ -1,0 +1,6 @@
+dist
+node_modules
+.DS_Store
+
+# Not ignoring the following project-specific configuration
+# .vscode 
