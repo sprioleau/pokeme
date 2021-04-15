@@ -72,6 +72,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: "./src/index.html",
 			filename: "./index.html",
+			favicon: "./src/images/favicon.png",
 		}),
 		new ImageminPlugin({
 			disable: process.env.NODE_ENV !== "production", // Disable during development
