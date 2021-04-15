@@ -1,6 +1,6 @@
 # Really Useful Timer
 
-![really useful timer logo](https://really-useful-timer.netlify.app/rut-logo.png)
+<img src="https://github.com/dartmouth-cs52-21S/starterpack-sprioleau/blob/main/src/images/rut-logo.png?raw=true" alt="Really Useful Timer Logo">
 
 _This page displays a logo and tells you how long you've spent on the page._
 
