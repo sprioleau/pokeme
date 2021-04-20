@@ -5,6 +5,10 @@ const autoprefixer = require("autoprefixer");
 const postcssPresets = require("postcss-preset-env");
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
+// Reference: https://webpack.js.org/plugins/copy-webpack-plugin/
+const CopyPlugin = require("copy-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
+
 const env = process.env.NODE_ENV || "development";
 // set to 'production' or 'development' in your env
 
@@ -52,19 +56,12 @@ module.exports = {
 			},
 			{
 				test: /\.(jpe?g|png|gif|svg|ico)$/,
-				use: [
-					{
-						loader: "file-loader",
-						options: {
-							useRelativePath: true,
-							name: "[name].[ext]",
-						},
-					},
-				],
+				type: "asset/resource",
 			},
 		],
 	},
 	plugins: [
+		new Dotenv(),
 		new MiniCssExtractPlugin({
 			filename: "[name].css",
 		}),
@@ -72,7 +69,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: "./src/index.html",
 			filename: "./index.html",
-			favicon: "./src/images/favicon.png",
+			favicon: "./src/app/images/favicon.png",
 		}),
 		new ImageminPlugin({
 			disable: process.env.NODE_ENV !== "production", // Disable during development
@@ -80,6 +77,9 @@ module.exports = {
 				quality: "95-100",
 			},
 			svgo: {},
+		}),
+		new CopyPlugin({
+			patterns: [{ from: "./src/app/images", to: "images" }],
 		}),
 	],
 };
