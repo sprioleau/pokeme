@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch, NavLink } from "react-router-dom";
 import "./styles/style.scss";
 
-const Nav = (props) => {
+const Nav = () => {
 	return (
 		<nav>
 			<ul>
@@ -41,6 +41,10 @@ const FallBack = () => {
 	return <div>URL Not Found</div>;
 };
 
+// Bug Fix for: "Warning: React does not recognize the `computedMatch` prop on a DOM element."
+// Reference: https://stackoverflow.com/questions/51971449/react-warning-computedmatch-regarding-some-case-issues
+// Action: Remove unnecessary wrapper div.
+
 const App = () => {
 	// return <h1>Hello World!</h1>;
 	return (
@@ -50,7 +54,7 @@ const App = () => {
 					<Nav />
 					<Route exact path="/" component={Welcome} />
 					<Route path="/about" component={About} />
-					<Route exact path="/test/:id" component={Test} />
+					<Route path="/test/:id" component={Test} />
 					<Route component={FallBack} />
 				</div>
 			</Switch>
