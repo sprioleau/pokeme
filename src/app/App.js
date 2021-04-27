@@ -50,13 +50,11 @@ const App = () => {
 	return (
 		<Router>
 			<Switch>
-				<div>
-					<Nav />
-					<Route exact path="/" component={Welcome} />
-					<Route path="/about" component={About} />
-					<Route path="/test/:id" component={Test} />
-					<Route component={FallBack} />
-				</div>
+				<Nav />
+				<Route exact path="/" component={Welcome} />
+				<Route path="/about" component={About} />
+				<Route path="/test/:id" component={Test} />
+				<Route component={FallBack} />
 			</Switch>
 		</Router>
 	);
