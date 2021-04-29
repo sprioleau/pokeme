@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, NavLink } from "react-router-dom";
 import "./styles/style.scss";
+import Counter from "./components/counter";
+import Controls from "./components/controls";
 
 const Nav = () => {
 	return (
@@ -30,7 +32,13 @@ const About = () => {
 };
 
 const Welcome = () => {
-	return <div>Welcome</div>;
+	return (
+		<div>
+			<h1>Welcome</h1>
+			<Counter />
+			<Controls />
+		</div>
+	);
 };
 
 const Test = (props) => {
@@ -49,8 +57,8 @@ const App = () => {
 	// return <h1>Hello World!</h1>;
 	return (
 		<Router>
+			<Nav />
 			<Switch>
-				<Nav />
 				<Route exact path="/" component={Welcome} />
 				<Route path="/about" component={About} />
 				<Route path="/test/:id" component={Test} />
