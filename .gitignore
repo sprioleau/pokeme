@@ -1,6 +1,7 @@
 dist
 node_modules
 .DS_Store
+.env
 
 # Not ignoring the following project-specific configuration
 # .vscode 
