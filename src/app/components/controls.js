@@ -1,20 +1,21 @@
 import React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { increment, decrement } from "../store/actions";
 
-const Controls = (props) => {
+const Controls = () => {
+	const dispatch = useDispatch();
+
 	return (
 		<div>
-			<button type="button" onClick={props.increment}>
+			<button type="button" onClick={() => dispatch(increment())}>
 				+
 			</button>
-			<button type="button" onClick={props.decrement}>
+			<button type="button" onClick={() => dispatch(decrement())}>
 				-
 			</button>
 		</div>
 	);
 };
 
-export default withRouter(connect(null, { increment, decrement })(Controls));
+export default Controls;

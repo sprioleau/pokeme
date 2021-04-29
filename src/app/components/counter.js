@@ -1,13 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCount } from "../store/selectors";
 
-const Counter = (props) => {
-	return <div>Current Count: {props.count}</div>;
+const Counter = () => {
+	const count = useSelector(selectCount);
+	return <div>Current Count: {count}</div>;
 };
 
-const mapStateToProps = (state) => ({
-	count: state.count,
-});
-
-export default withRouter(connect(mapStateToProps, null)(Counter));
+export default Counter;
