@@ -4,4 +4,4 @@ node_modules
 .env
 
 # Not ignoring the following project-specific configuration
-# .vscode 
+.vscode
