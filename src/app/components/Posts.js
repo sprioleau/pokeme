@@ -21,7 +21,7 @@ const Posts = () => {
 			<ul>
 				{posts.map((post) => (
 					<li key={post.id} className="post">
-						<NavLink to={`posts/${post.id}`}>Go to Post</NavLink>
+						<NavLink to={`cards/${post.id}`}>Go to Post</NavLink>
 						<h3 className="post__title">{post.title}</h3>
 						<img src={post.coverUrl} alt={post.title} />
 						<p className="post__body">{post.content}</p>

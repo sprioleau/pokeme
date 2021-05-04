@@ -7,3 +7,4 @@ export const selectModalContentExists = (state) => state.posts.modalContent !== 
 
 // Cards Reducer
 export const selectCards = (state) => state.cards.cards;
+export const selectCurrentCard = (state) => state.cards.currentCard;

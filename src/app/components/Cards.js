@@ -13,7 +13,7 @@ const Cards = () => {
 
   const handleSaveCardsToDatabase = () => {
     cards.forEach((card) => {
-      api.createPost(card, (data) => console.log(data.name));
+      api.createCardFromApi(card, (data) => console.log(data.title));
     });
   };
 
@@ -22,8 +22,8 @@ const Cards = () => {
       <button type="button" onClick={handleGenerateCards}>Generate Cards</button>
       {cards.length > 0 && <button type="button" onClick={handleSaveCardsToDatabase}>Save Cards to Database</button>}
       {cards.length > 0 && (
-        cards.map(({ id, name, photoUrl, type, attacks, height, weight, weakness, retreatCost }) => (
-          <li key={id} className="card">
+        cards.map(({ name, photoUrl, type, attacks, height, weight, weakness, retreatCost }) => (
+          <li key={name} className="card">
             <header className="card__header">
               <h3 className="card__name">{name}</h3>
               <span className="card__hit-points">100 HP</span>

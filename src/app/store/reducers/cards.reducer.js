@@ -2,6 +2,7 @@ import types from "../types";
 
 const initialState = {
 	cards: [],
+	currentCard: {},
 };
 
 const CardsReducer = (state = initialState, action) => {
