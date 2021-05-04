@@ -5,7 +5,6 @@ const types = {
 	UPDATE_POST: "UPDATE_POST", // Update
 	DELETE_POST: "DELETE_POST", // Delete
 	TOGGLE_MODAL_VISIBILITY: "TOGGLE_MODAL_VISIBILITY",
-	GENERATE_CARDS: "GENERATE_CARDS",
 };
 
 export default types;

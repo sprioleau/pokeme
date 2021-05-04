@@ -54,14 +54,3 @@ export const deletePost = (id, history) => {
 		history.push("/posts");
 	});
 };
-
-export const generateCards = (quantity) => {
-	if (quantity >= 50) return null;
-
-	return (dispatch) => api.generateCards(quantity, (cards) => {
-		dispatch({
-			type: types.GENERATE_CARDS,
-			cards
-		});
-	});
-};

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getName, types, weaknesses, getRandomFromArray } from "./functions";
 
 const ROOT_URL = "https://platform.cs52.me/api";
 const API_KEY = "s_prioleau";
@@ -51,26 +50,5 @@ export const deletePost = async (id, callback) => {
 		return callback(data);
 	} catch (error) {
 		return console.error("🔴 Uh oh! There was an error when trying to deletee your post.", error);
-	}
-};
-
-export const generateCards = async (quantity, callback) => {
-	try {
-		const { data } = await axios.get(`https://randomuser.me/api/?results=${quantity}`);
-		const cards = data.results.map(({ name, picture, dob, login }) => ({
-			id: login.uuid,
-			name: getName(name),
-			photoUrl: picture.large,
-			type: getRandomFromArray(types),
-			attacks: ["Kick", "Punch"],
-			height: dob.age,
-			weight: dob.age * 2,
-			weakness: getRandomFromArray(weaknesses),
-			retreatCost: getRandomFromArray([1, 2, 3])
-		}));
-		// console.log("cards:", cards);
-		return callback(cards);
-	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to generate cards.", error);
 	}
 };

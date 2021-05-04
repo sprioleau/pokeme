@@ -11,7 +11,6 @@ import Error404 from "./components/Error404";
 import { selectMessage, selectModalContentExists } from "./store/selectors";
 import Banner from "./components/Banner";
 import Modal from "./components/Modal";
-import Cards from "./components/Cards";
 
 const App = () => {
 	const message = useSelector(selectMessage);
@@ -27,7 +26,6 @@ const App = () => {
 				<Route exact path={["/", "/posts"]} component={Posts} />
 				<Route path="/posts/new" component={NewPost} />
 				<Route path="/posts/:postId" component={Post} />
-				<Route path="/cards" component={Cards} />
 				<Route component={Error404} />
 			</Switch>
 		</Router>
