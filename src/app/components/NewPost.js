@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import * as actions from "../store/actions";
+import { createPost, toggleModalVisibility } from "../store/actions";
 
 const NewPost = () => {
 	const [title, setTitle] = useState("");
@@ -19,16 +19,11 @@ const NewPost = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		const newPost = {
-			title,
-			content,
-			tags,
-			coverUrl
-		};
-
-		dispatch(actions.createPost(newPost, history));
+		const newPost = { title, content, tags, coverUrl };
+		dispatch(createPost(newPost, history));
 	};
+
+	const handleCloseModal = () => dispatch(toggleModalVisibility());
 
 	return (
 		<div className="new-post">
@@ -47,7 +42,8 @@ const NewPost = () => {
 					<p className="new-post__input coverUrl">
 						<label htmlFor="coverUrl">Cover URL:	<input type="text" id="coverUrl" name="coverUrl" value={coverUrl} onChange={handleCoverUrlChange} /></label>
 					</p>
-				<button type="submit" className="new-post__submit" onClick={handleSubmit}>Create Post</button>
+				<button type="submit" className="new-post__button btn" onClick={handleSubmit}>Create Post</button>
+				<button type="button" className="new-post__button btn" onClick={handleCloseModal}>Close</button>
 				</fieldset>
 			</form>
 		</div>

@@ -3,14 +3,14 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectPosts } from "../store/selectors";
-import * as actions from "../store/actions";
+import { fetchPosts } from "../store/actions";
 
 const Posts = () => {
 	const dispatch = useDispatch();
 	const posts = useSelector(selectPosts);
 
 	useEffect(() => {
-		dispatch(actions.fetchPosts());
+		dispatch(fetchPosts());
 	}, []);
 
 	if (posts.length === 0) return <h2>No posts availalble</h2>;

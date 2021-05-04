@@ -4,6 +4,7 @@ const initialState = {
 	posts: [],
 	currentPost: {},
 	message: "",
+	modalContent: null,
 };
 
 const PostsReducer = (state = initialState, action) => {
@@ -40,11 +41,18 @@ const PostsReducer = (state = initialState, action) => {
 			};
 		}
 
-		// Delet
+		// Delete
 		case types.DELETE_POST: {
 			return {
 				...state,
 				message: action.message
+			};
+		}
+
+		case types.TOGGLE_MODAL_VISIBILITY: {
+			return {
+				...state,
+				modalContent: action.modalContent
 			};
 		}
 

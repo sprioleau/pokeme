@@ -2,6 +2,11 @@ import types from "../types";
 
 import * as api from "../../api";
 
+export const toggleModalVisibility = (modalContent) => ({
+	type: types.TOGGLE_MODAL_VISIBILITY,
+	modalContent: null ?? modalContent
+});
+
 // --- Thunks --- //
 export const fetchPosts = () => {
 	return (dispatch) => api.fetchPosts((posts) => dispatch({
@@ -47,5 +52,16 @@ export const deletePost = (id, history) => {
 		});
 
 		history.push("/posts");
+	});
+};
+
+export const generateCards = (quantity) => {
+	if (quantity >= 50) return null;
+
+	return (dispatch) => api.generateCards(quantity, (cards) => {
+		dispatch({
+			type: types.GENERATE_CARDS,
+			cards
+		});
 	});
 };
