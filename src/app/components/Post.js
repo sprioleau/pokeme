@@ -4,18 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { IoTrashOutline } from "react-icons/io5";
 
 import * as actions from "../store/actions";
-import { selectCurrentPost } from "../store/selectors";
+import { selectCurrentCard } from "../store/selectors";
 
 const Post = () => {
-	const post = useSelector(selectCurrentPost);
+	const post = useSelector(selectCurrentCard);
 	const { postId } = useParams();
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const handleDeletePost = () => dispatch(actions.deletePost(postId, history));
+	const handleDeletePost = () => dispatch(actions.deleteCard(postId, history));
 
 	useEffect(() => {
-		dispatch(actions.fetchPost(postId));
+		dispatch(actions.fetchCard(postId));
 	}, []);
 
 	if (!post) return null;

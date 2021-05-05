@@ -8,62 +8,50 @@ export const toggleModalVisibility = (modalContent) => ({
 });
 
 // --- Thunks --- //
-export const fetchPosts = () => {
-	return (dispatch) => api.fetchPostsFromApi((posts) => dispatch({
-		type: types.FETCH_POSTS,
-		posts,
+export const fetchCards = () => {
+	return (dispatch) => api.fetchCardsFromApi((cards) => dispatch({
+		type: types.FETCH_CARDS,
+		cards,
 	}));
 };
 
 // Create
-export const createPost = (fields, history) => {
-	return (dispatch) => api.createPostFromApi(fields, (newPost) => {
+export const createCard = (fields, history) => {
+	return (dispatch) => api.createCardFromApi(fields, (newCard) => {
 		dispatch({
-			type: types.CREATE_POST,
-			newPost,
+			type: types.CREATE_CARD,
+			newCard,
 		});
 
-		history.push(`/posts/${newPost.id}`);
+		history.push(`/cards/${newCard.id}`);
 	});
 };
 
 // Read
-export const fetchPost = (id, callback) => {
-	return (dispatch) => api.fetchPostFromApi(id, (post) => {
+export const fetchCard = (id, callback) => {
+	return (dispatch) => api.fetchCardFromApi(id, (card) => {
 		dispatch({
-			type: types.FETCH_POST,
-			post
+			type: types.FETCH_CARD,
+			card
 		});
 
-		callback(post);
+		callback(card);
 	});
 };
 
 // Update
-export const updatePost = (fields) => {
-	return (dispatch) => api.updatePostFromApi(fields, (updatedPost) => dispatch({
-		type: types.UPDATE_POST,
-		updatedPost
+export const updateCard = (fields) => {
+	return (dispatch) => api.updateCardFromApi(fields, (updatedCard) => dispatch({
+		type: types.UPDATE_CARD,
+		updatedCard
 	}));
 };
 
 // Delete
-export const deletePost = (id, history) => {
-	return (dispatch) => api.deletePostFromApi(id, (data) => {
-		dispatch({
-			type: types.DELETE_POST,
-			message: data.message,
-		});
-
-		history.push("/posts");
-	});
-};
-
-// Delete Card
 export const deleteCard = (id, history) => {
 	return (dispatch) => api.deleteCardFromApi(id, (data) => {
 		dispatch({
-			type: types.DELETE_POST,
+			type: types.DELETE_CARD,
 			message: data.message,
 		});
 

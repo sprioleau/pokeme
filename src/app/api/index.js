@@ -6,32 +6,38 @@ const API_KEY = "s_prioleau";
 const API_ROUTE = "posts";
 
 // eslint-disable-next-line
-export const fetchPostsFromApi = async (callback) => {
+export const fetchCardsFromApi = async (callback) => {
 	try {
 		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`);
 		return callback(data);
 	} catch (error) {
-		return console.error("🔴 Uh oh! We got an error when trying to load your posts.", error);
+		return console.error("🔴 Uh oh! We got an error when trying to load your cards.", error);
 	}
 };
 
 // Create
-export const createPostFromApi = async (post, callback) => {
-	try {
-		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`, post);
-		return callback(data);
-	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to crate your post.", error);
-	}
-};
+// export const createCardFromApi = async (post, callback) => {
+// 	try {
+// 		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`, post);
+// 		return callback(data);
+// 	} catch (error) {
+// 		return console.error("🔴 Uh oh! There was an error when trying to crate your post.", error);
+// 	}
+// };
 
 export const createCardFromApi = async (card, callback) => {
-	const databaseSafeCard = {
-		content: JSON.stringify(card)
-	};
+	const cardObject = {};
+	cardObject.content = JSON.stringify(card);
+	// cardObject.content = "content";
+	cardObject.title = card.name;
+	console.log("cardObject:", cardObject);
+	// const databaseSafeCard = {
+	// 	content: JSON.stringify(card)
+	// };
+	// console.log("databaseSafeCard:", databaseSafeCard);
 
 	try {
-		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`, databaseSafeCard);
+		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`, cardObject);
 		return callback(data);
 	} catch (error) {
 		return console.error("🔴 Uh oh! There was an error when trying to crate your card.", error);
@@ -39,15 +45,15 @@ export const createCardFromApi = async (card, callback) => {
 };
 
 // Read
-export const fetchPostFromApi = async (id, callback) => {
-	try {
-		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
-		// console.log("data:", data);
-		return callback(data);
-	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to update your post.", error);
-	}
-};
+// export const fetchCardFromApi = async (id, callback) => {
+// 	try {
+// 		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
+// 		// console.log("data:", data);
+// 		return callback(data);
+// 	} catch (error) {
+// 		return console.error("🔴 Uh oh! There was an error when trying to update your post.", error);
+// 	}
+// };
 
 export const fetchCardFromApi = async (id, callback) => {
 	try {
@@ -59,24 +65,24 @@ export const fetchCardFromApi = async (id, callback) => {
 };
 
 // Update
-export const updatePostFromApi = async (id, updatedFields, callback) => {
+export const updateCardFromApi = async (id, updatedFields, callback) => {
 	try {
 		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`, updatedFields);
 		return callback(data);
 	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to update your post.", error);
+		return console.error("🔴 Uh oh! There was an error when trying to update your card.", error);
 	}
 };
 
 // Delete
-export const deletePostFromApi = async (id, callback) => {
-	try {
-		const { data } = await axios.delete(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
-		return callback(data);
-	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to delete your post.", error);
-	}
-};
+// export const deleteCardFromApi = async (id, callback) => {
+// 	try {
+// 		const { data } = await axios.delete(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
+// 		return callback(data);
+// 	} catch (error) {
+// 		return console.error("🔴 Uh oh! There was an error when trying to delete your post.", error);
+// 	}
+// };
 
 // Delete
 export const deleteCardFromApi = async (id, callback) => {
@@ -108,4 +114,4 @@ export const generateCards = async (quantity, callback) => {
 	}
 };
 
-export const dropAllEntriesFromApi = (arrayOfIds) => arrayOfIds.forEach((id) => deletePostFromApi(id, () => console.log(`deleted entry with id: ${id}`)));
+export const dropAllEntriesFromApi = (arrayOfIds) => arrayOfIds.forEach((id) => deleteCardFromApi(id, () => console.log(`deleted entry with id: ${id}`)));

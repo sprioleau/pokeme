@@ -1,22 +1,24 @@
+// import React, { useEffect } from "react";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
 
 import * as actions from "../store/actions";
-import { selectCurrentPost } from "../store/selectors/index";
+import { selectCurrentCard } from "../store/selectors/index";
 
 const Card = () => {
-  const [cardContent, setCardContent] = useState(null);
-	const currentCard = useSelector(selectCurrentPost);
+	const currentCard = useSelector(selectCurrentCard);
 	const { cardId } = useParams();
 	const dispatch = useDispatch();
   const history = useHistory();
 
-	const handleDeleteCard = () => dispatch(actions.deletePost(cardId, history));
+  const [cardContent, setCardContent] = useState(null);
+
+	const handleDeleteCard = () => dispatch(actions.deleteCard(cardId, history));
 
 	useEffect(() => {
-    dispatch(actions.fetchPost(cardId, (card) => setCardContent(JSON.parse(card.content))));
+    dispatch(actions.fetchCard(cardId, (data) => setCardContent(JSON.parse(data.content))));
 	}, []);
 
   if (!currentCard) return null;

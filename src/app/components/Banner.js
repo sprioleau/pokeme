@@ -1,16 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { toggleModalVisibility } from "../store/actions";
-import NewPost from "./NewPost";
+import NewCard from "./NewCard";
 
 function Banner() {
   const dispatch = useDispatch();
 
-  const handleCreateNewPost = () => dispatch(toggleModalVisibility(<NewPost />));
+  const handleCreateNewCard = () => dispatch(toggleModalVisibility(<NewCard />));
 
   return (
     <div className="banner">
-      <button type="button" onClick={handleCreateNewPost}>Create New Post</button>
+      <button type="button" onClick={handleCreateNewCard}>Create New Card</button>
     </div>
   );
 }

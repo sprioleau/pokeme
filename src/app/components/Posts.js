@@ -1,24 +1,25 @@
-import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+// import React, { useEffect } from "react";
+// import { NavLink } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
 
-import { selectPosts } from "../store/selectors";
-import { fetchPosts } from "../store/actions";
+// import { selectPosts } from "../store/selectors";
+// import { fetchPosts } from "../store/actions";
 
 const Posts = () => {
-	const dispatch = useDispatch();
-	const posts = useSelector(selectPosts);
+	// const dispatch = useDispatch();
+	// const posts = useSelector(selectPosts);
 
-	useEffect(() => {
-		dispatch(fetchPosts());
-	}, []);
+	// useEffect(() => {
+	// 	dispatch(fetchPosts());
+	// }, []);
 
-	if (posts.length === 0) return <h2>No posts availalble</h2>;
+	// if (posts.length === 0) return <h2>No posts availalble</h2>;
 
 	return (
 		<>
 			<h1>Posts</h1>
-			<ul>
+			{/* <ul>
 				{posts.map((post) => (
 					<li key={post.id} className="post">
 						<NavLink to={`cards/${post.id}`}>Go to Post</NavLink>
@@ -34,7 +35,7 @@ const Posts = () => {
 						</ul>
 					</li>
 				))}
-			</ul>
+			</ul> */}
 		</>
 	);
 };
