@@ -1,5 +1,6 @@
 body {
 	@include ui-background;
+	@include ff;
 	padding: $body-padding;
 	color: $white;
 }
@@ -17,4 +18,12 @@ a {
 	&:hover {
 		text-decoration: underline;
 	}
+}
+
+.icon {
+	width: 2.5rem;
+}
+
+h1, h2, h3, h4, p {
+	margin-top: 0;
 }

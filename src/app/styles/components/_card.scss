@@ -1,0 +1,54 @@
+.card {
+  $card-font-size: 2vw;
+  width: calc(80vmin - 2 * #{$body-padding});
+  background-color: $p-blue;
+  border: 2.5vmin solid $p-yellow;
+  border-radius: 1.5vmin;
+  padding: 2vw;
+  font-size: 2vw;
+  
+  &__container {
+    @include aspect-ratio-parent(4 / 5);
+    overflow: visible;
+  }
+
+  &__wrapper {
+    @include aspect-ratio-child;
+    @include center;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  &__header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__header-right {
+    @include center;
+  }
+
+  &__name {
+    font-size: calc(2 * #{$card-font-size});
+    margin-bottom: 0;
+  }
+
+  &__hit-points {
+    font-size: calc(1.5 * #{$card-font-size});
+    @include ff-medium;
+    color: $red;
+    margin-right: 1vmin;
+  }
+
+  &__type-badge {
+    width: 8vmin;
+  }
+
+  &__image {
+    // width: 100%;
+    box-shadow: 0 0 0 0.75vmin $p-yellow inset;
+  }
+}
