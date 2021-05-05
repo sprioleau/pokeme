@@ -5,7 +5,5 @@
 
 // Components
 @import "components/app";
-
-.active {
-	color: pink;
-}
+@import "components/nav";
+@import "components/cards";

@@ -20,19 +20,23 @@ const App = () => {
 	const modalContentExists = useSelector(selectModalContentExists);
 
 	return (
-		<Router>
-			<Nav />
-			<div className="message">{message}</div>
-			<button type="button" onClick={() => dropAllEntriesFromApi(cards.map(({ id }) => id))}>Drop all entries</button>
-			{modalContentExists && <Modal />}
-			<Banner />
-			<Switch>
-				<Route exact path={["/", "/cards"]} component={Cards} />
-				<Route path="/cards/new" component={NewCard} />
-				<Route path="/cards/:cardId" component={Card} />
-				<Route component={Error404} />
-			</Switch>
-		</Router>
+		<div className="app">
+			<Router>
+				<Nav />
+				<div className="message">{message}</div>
+				<button type="button" onClick={() => dropAllEntriesFromApi(cards.map(({ id }) => id))}>
+					Drop all entries
+				</button>
+				{modalContentExists && <Modal />}
+				<Banner />
+				<Switch>
+					<Route exact path={["/", "/cards"]} component={Cards} />
+					<Route path="/cards/new" component={NewCard} />
+					<Route path="/cards/:cardId" component={Card} />
+					<Route component={Error404} />
+				</Switch>
+			</Router>
+		</div>
 	);
 };
 

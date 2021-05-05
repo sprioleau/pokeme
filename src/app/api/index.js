@@ -16,25 +16,10 @@ export const fetchCardsFromApi = async (callback) => {
 };
 
 // Create
-// export const createCardFromApi = async (post, callback) => {
-// 	try {
-// 		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`, post);
-// 		return callback(data);
-// 	} catch (error) {
-// 		return console.error("🔴 Uh oh! There was an error when trying to crate your post.", error);
-// 	}
-// };
-
 export const createCardFromApi = async (card, callback) => {
-	const cardObject = {};
-	cardObject.content = JSON.stringify(card);
-	// cardObject.content = "content";
-	cardObject.title = card.name;
-	console.log("cardObject:", cardObject);
-	// const databaseSafeCard = {
-	// 	content: JSON.stringify(card)
-	// };
-	// console.log("databaseSafeCard:", databaseSafeCard);
+	const cardObject = {
+		title: JSON.stringify(card),
+	};
 
 	try {
 		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`, cardObject);
@@ -45,16 +30,6 @@ export const createCardFromApi = async (card, callback) => {
 };
 
 // Read
-// export const fetchCardFromApi = async (id, callback) => {
-// 	try {
-// 		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
-// 		// console.log("data:", data);
-// 		return callback(data);
-// 	} catch (error) {
-// 		return console.error("🔴 Uh oh! There was an error when trying to update your post.", error);
-// 	}
-// };
-
 export const fetchCardFromApi = async (id, callback) => {
 	try {
 		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
@@ -73,16 +48,6 @@ export const updateCardFromApi = async (id, updatedFields, callback) => {
 		return console.error("🔴 Uh oh! There was an error when trying to update your card.", error);
 	}
 };
-
-// Delete
-// export const deleteCardFromApi = async (id, callback) => {
-// 	try {
-// 		const { data } = await axios.delete(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
-// 		return callback(data);
-// 	} catch (error) {
-// 		return console.error("🔴 Uh oh! There was an error when trying to delete your post.", error);
-// 	}
-// };
 
 // Delete
 export const deleteCardFromApi = async (id, callback) => {

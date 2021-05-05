@@ -1,0 +1,46 @@
+.cards {
+  margin: 0 auto;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__list-item {
+    position: relative;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    flex: 1 0 200px;
+
+    &.collapse {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  &__card {
+    @include aspect-ratio-parent(4 / 5);
+    background-color: $p-blue;
+    border: 0.5rem solid $p-yellow;
+    margin-bottom: 0.75rem;
+    border-radius: $corner-radius;
+  }
+
+  &__card-name {
+    @include center;
+    text-align: center;
+  }
+
+  &__card-wrapper {
+    @include aspect-ratio-child;
+  }
+
+  &__card-type-badge {
+    $width: 2.5rem;
+    width: $width;
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    z-index: 1;
+  }
+}
