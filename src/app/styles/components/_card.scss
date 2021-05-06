@@ -8,7 +8,7 @@
   flex: 0 0 2px;
   height: 2px;
   width: 100%;
-  background-color: $black;
+  background-color: rgba($p-blue-dark, 0.8);
   margin: 1vmin 0;
 }
 
@@ -16,7 +16,7 @@
   $card-font-size: 3vmin;
   // width: calc(80vmin - 2 * #{$body-padding});
   background-color: $p-blue;
-  border: 2.5vmin solid $p-yellow;
+  border: 2vmin solid $p-yellow;
   border-radius: 1.5vmin;
   padding: 2vw;
   font-size: 2vw;
@@ -39,6 +39,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 0.5vmin;
   }
 
   &__header-right {
@@ -46,8 +47,9 @@
   }
 
   &__name {
-    font-size: calc(2 * #{$card-font-size});
+    font-size: calc(1.75 * #{$card-font-size});
     margin-bottom: 0;
+    line-height: 1.2;
   }
 
   &__hit-points {
@@ -58,17 +60,17 @@
   }
 
   &__type-badge {
-    width: 8vmin;
+    width: 6vmin;
   }
   
   &__image {
-    $border-width: 1.5vmin;
+    $border-width: 1vmin;
     width: calc(100% - 2 * #{$border-width});
     height: calc(40% - 2 * #{$border-width});
     display: block;
     object-fit: cover;
     object-position: center;
-    border: 1.5vmin solid $p-yellow;
+    border: $border-width solid $p-yellow;
     margin-bottom: 1vmin;
     position: relative;
   }
@@ -76,10 +78,11 @@
   &__anatomy {
     @include center;
     @include ff-medium;
-    font-size: 80%;
-    width: 100%;
+    font-size: 75%;
     background-color: $p-yellow;
     color: $black;
+    padding: 0.25vmin 2vmin 0.5vmin;
+    line-height: 1.2;
   }
 
   &__anatomy-text {
@@ -90,20 +93,38 @@
     }
   }
 
+  &__attacks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex: 1;
+  }
+
   &__attack {
     display: flex;
     align-items: center;
     line-height: 1.2;
-    padding: 2vmin 0;
+    padding: 1vmin 0;
+
+    &:not(:last-child) {
+      border-bottom: 0.25vmin solid rgba($p-blue-dark, 0.8);
+    }
   }
 
   &__attack-energy-cost {
-    flex: 0 0 3rem;
+    @include center;
+    flex-wrap: wrap;
+    flex: 0 0 3.5rem;
     font-size: calc(2 * #{$card-font-size});
+    margin-right: 1vmin;
   }
 
   &__attack-name {
     @include ff-medium;
+  }
+
+  &__attack-name-description {
+    margin-right: 1vmin;
   }
 
   &__attack-description {
@@ -112,7 +133,7 @@
 
   &__attack-damage {
     flex: 0 0 3rem;
-    font-size: calc(2 * #{$card-font-size});
+    font-size: calc(1.75 * #{$card-font-size});
   }
 
   &__utility-stats {
@@ -120,6 +141,9 @@
     align-items: flex-start;
     width: 100%;
     margin-bottom: 1vmin;
+    font-size: 80%;
+    padding-top: 1vmin;
+    border-top: 0.25vmin solid rgba($p-blue-dark, 0.8);
   }
 
   &__utility-stat {
@@ -128,7 +152,7 @@
     justify-content: center;
     align-items: center;
 
-     &:not(:last-child) {
+    &:not(:last-child) {
       margin-right: 2vmin;
     }
   }
@@ -153,13 +177,13 @@
     font-size: 80%;
     line-height: 1.2;
     font-style: italic;
-    padding: 0.5vmin;
+    padding: 0.5vmin 1vmin 0.75vmin;
     border: 0.4vmin solid $p-yellow;
   }
 
-
   &__footer {
     font-size: 70%;
-    opacity: 0.8
+    opacity: 0.8;
+    margin: 0.25vmin 0;
   }
 }

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getName, types, getRandomFromArray } from "./functions/api.functions";
+import { getName, types, getRandomFromArray, getAttacks, getHitPoints } from "./functions/api.functions";
+import moves from "../data/pokemon-moves";
 // import { getName, types, weaknesses, getRandomFromArray } from "./functions/api.functions";
 
 const ROOT_URL = "https://platform.cs52.me/api";
@@ -68,17 +69,12 @@ export const generateCards = async (quantity, callback) => {
 			name: getName(name),
 			photoUrl: picture.large,
 			type: getRandomFromArray(types),
-			attacks: [
-				{
-					name: "Kick",
-					description: "Does 40 damage plus 10 more damage for each type stone. You can's add more than 20 damage this way.",
-					stones: {
-						energyCost: 3,
-						damage: "40+"
-					}
-				}
-			],
-			height: dob.age,
+			attacks: getAttacks(moves),
+			hitPoints: getHitPoints(),
+			height: {
+				ft: 5,
+				in: 10
+			},
 			weight: dob.age * 2,
 			weakness: getRandomFromArray(types),
 			retreatCost: getRandomFromArray([1, 2, 3])

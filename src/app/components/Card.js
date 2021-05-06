@@ -45,8 +45,8 @@ const Card = () => {
           style={{
             backgroundColor: "red",
             width: "450px",
-            // width: "calc(80vmin - 2 * 4vmin)",
             height: "100%",
+            minHeight: "650px",
             cursor: "pointer"
           }}
           // onClick={handleFlipCard}
@@ -58,30 +58,31 @@ const Card = () => {
               <header className="card__header">
                 <h3 className="card__name">{cardContent.name}</h3>
                 <div className="card__header-right">
-                  <span className="card__hit-points">100 HP</span>
+                  <span className="card__hit-points">{cardContent.hitPoints}</span>
                   <img className="card__type-badge icon" src={getImageSourceFromType(cardContent.type)} alt={cardContent.name} />
                 </div>
               </header>
               <img className="card__image" src={cardContent.photoUrl} alt={cardContent.name} />
               <div className="card__anatomy">
                 <p className="card__anatomy-text">{`${cardContent.type} PokéMe`}</p>
-                <p className="card__anatomy-text">{`Length: ${cardContent.height}`}</p>
-                <p className="card__anatomy-text">{`Weight: ${cardContent.weight}`}</p>
+                <p className="card__anatomy-text">{`Length: ${cardContent.height.ft}' ${cardContent.height.in}"`}</p>
+                <p className="card__anatomy-text">{`Weight: ${cardContent.weight} lbs`}</p>
               </div>
-              {/* <div className="divider" /> */}
               <ul className="card__attacks">{cardContent.attacks.map((attack) => (
                 <li key={attack.name} className="card__attack">
-                  <div className="card__attack-energy-cost">{attack.stones.energyCost}</div>
+                  <div className="card__attack-energy-cost"><EnergyCostIcon cost={attack.energyCost} type={attack.type} /></div>
                   <div className="card__attack-name-description"><span className="card__attack-name">{attack.name}</span> <span className="card__attack-description">{attack.description}</span></div>
-                  <div className="card__attack-damage">{attack.stones.damage}</div>
+                  <div className="card__attack-damage">{attack.damage}</div>
                 </li>
                 ))}
-                <div className="divider" />
+                {/* {cardContent.attacks.length > 1 && <div className="divider" />} */}
               </ul>
               <ul className="card__utility-stats">
                 <li className="card__utility-stat">
                   <span className="card__utility-stat-text">weakness</span>
-                  <div className="card__icon type weakness"><img src={getImageSourceFromType(cardContent.weakness)} alt={cardContent.weakness} width="100%" height="auto" /></div>
+                  <div className="card__icon type weakness">
+                    <img className="icon small" src={getImageSourceFromType(cardContent.weakness)} alt={cardContent.weakness} width="100%" height="auto" />
+                  </div>
                 </li>
                 <li className="card__utility-stat resistance">
                   <span className="card__utility-stat-text">resistance</span>
@@ -89,7 +90,7 @@ const Card = () => {
                 </li>
                 <li className="card__utility-stat">
                   <span className="card__utility-stat-text">retreat cost</span>
-                  <div className="card__icon type">{cardContent.retreatCost}</div>
+                  <div className="card__icon type"><RetreatCostIcon cost={cardContent.retreatCost} /></div>
                 </li>
               </ul>
               <p className="card__description">A brutal PokéMe with pressurizd water jets on its shell. They are used for high-speed tackles.</p>
@@ -113,3 +114,6 @@ const Card = () => {
 };
 
 export default Card;
+
+const RetreatCostIcon = ({ cost }) => (cost === 0 ? "0" : Array(cost).fill(<img className="icon small" src="../images/pokeme-types/retreat.svg" alt="retreat symbol" />));
+const EnergyCostIcon = ({ cost, type }) => (Array(cost).fill(<img className="icon small" src={`../images/pokeme-types/${type.toLowerCase()}.svg`} alt="retreat symbol" />));
