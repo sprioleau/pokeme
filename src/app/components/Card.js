@@ -1,40 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-// import { useSpring, a } from "@react-spring/web";
 import ThreeDCard from "react-animated-3d-card";
+import typeColors from "../data/pokemon-type-colors";
 
 import * as actions from "../store/actions";
 import CardToolbar from "./CardToolbar";
-
-// const ASPECT_RATIO = 4 / 5;
 
 const Card = () => {
   const [cardContent, setCardContent] = useState(null);
   const dispatch = useDispatch();
   const { cardId } = useParams();
 
-  // Card flip animation config
-  // Copied from: https://codesandbox.io/s/spring-flip-card-knkfh?file=/src/App.tsx:40-89
-  // const [flipped, setFlipped] = useState(false);
-
-  // const transformString = `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`;
-
-  // const { transform, opacity } = useSpring({
-  //   opacity: flipped ? 1 : 0,
-  //   transform: transformString,
-  //   config: { mass: 5, tension: 500, friction: 80 },
-  // });
-
-  // const handleFlipCard = () => setFlipped(!flipped);
-
 	useEffect(() => {
     dispatch(actions.fetchCard(cardId, (data) => setCardContent(JSON.parse(data.title))));
 	}, []);
 
   if (!cardContent) return null;
-
-  // const heightString = `calc((80vmin - 2 * 4vmin) * 1 / ${ASPECT_RATIO})`;
 
   const getImageSourceFromType = (type) => `../images/pokeme-types/${cardContent.type ? `${type.toLowerCase()}.svg` : "bug.svg"}`;
 
@@ -44,15 +26,9 @@ const Card = () => {
       <ThreeDCard
           style={{
             backgroundColor: "red",
-            width: "450px",
-            height: "100%",
-            minHeight: "650px",
-            cursor: "pointer"
           }}
-          // onClick={handleFlipCard}
       >
-        <div className="card">
-        {/* <a.div className="card" style={{ opacity: opacity.to((o) => 1 - o), transform }} onClick={handleFlipCard}> */}
+        <div className="card" style={{ backgroundImage: "url(../images/smoke.png)", backgroundColor: typeColors[cardContent.type] }}>
           <div className="card__container">
             <div className="card__wrapper">
               <header className="card__header">
@@ -93,20 +69,12 @@ const Card = () => {
                   <div className="card__icon type"><RetreatCostIcon cost={cardContent.retreatCost} /></div>
                 </li>
               </ul>
-              <p className="card__description">A brutal PokéMe with pressurizd water jets on its shell. They are used for high-speed tackles.</p>
+              <p className="card__description">{cardContent.description}</p>
               <footer className="card__footer">
                 <span className="card__footer-text">Created by <a href="https://github.com/sprioleau">San&apos;Quan Prioleau</a> for <a href="http://cs52.me/">CS52</a></span>
               </footer>
             </div>
           </div>
-          {/* <div className="card">
-          <a.div className="card" style={{ opacity, transform, rotateX: "180deg", }}>
-            <div className="card__container">
-              <div className="card__wrapper">
-                <h2>Hello there!</h2>
-              </div>
-            </div>
-          </div> */}
         </div>
       </ThreeDCard>
     </div>

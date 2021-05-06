@@ -77,7 +77,8 @@ export const generateCards = async (quantity, callback) => {
 			},
 			weight: dob.age * 2,
 			weakness: getRandomFromArray(types),
-			retreatCost: getRandomFromArray([1, 2, 3])
+			retreatCost: getRandomFromArray([1, 2, 3]),
+			description: "A lovely PokéMe with an exceptional personality."
 		}));
 		console.log("cards:", cards);
 		return callback(cards);

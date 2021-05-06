@@ -8,26 +8,29 @@
   flex: 0 0 2px;
   height: 2px;
   width: 100%;
-  background-color: rgba($p-blue-dark, 0.8);
-  margin: 1vmin 0;
+  background-color: rgba($black, 0.8);
+  margin: 0.5rem 0;
 }
 
 .card {
-  $card-font-size: 3vmin;
+  $width: 20rem;
+  $card-font-size: 1rem;
+  width: $width;
+  min-height: calc(#{$width} * #{$aspect-ratio});
   // width: calc(80vmin - 2 * #{$body-padding});
-  background-color: $p-blue;
-  border: 2vmin solid $p-yellow;
-  border-radius: 1.5vmin;
+  background-blend-mode: multiply;
+  border: 0.75rem solid $p-yellow;
+  border-radius: 1rem;
   padding: 2vw;
   font-size: 2vw;
   
   &__container {
-    @include aspect-ratio-parent(400 / 650);
-    overflow: visible;
+    // @include aspect-ratio-parent(400 / 650);
+    overflow: hidden;
   }
 
   &__wrapper {
-    @include aspect-ratio-child;
+    // @include aspect-ratio-child;
     @include center;
     flex-direction: column;
     justify-content: flex-start;
@@ -39,7 +42,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 0.5vmin;
+    margin-bottom: 0.5rem;
   }
 
   &__header-right {
@@ -56,22 +59,23 @@
     font-size: calc(1.5 * #{$card-font-size});
     @include ff-medium;
     color: $red;
-    margin-right: 1vmin;
+    margin-right: 0.5rem;
   }
 
   &__type-badge {
-    width: 6vmin;
+    width: 2.5rem;
   }
   
   &__image {
-    $border-width: 1vmin;
+    $border-width: 0.25rem;
     width: calc(100% - 2 * #{$border-width});
-    height: calc(40% - 2 * #{$border-width});
+    max-height: 12rem;
+    // height: calc(40% - 2 * #{$border-width});
     display: block;
     object-fit: cover;
     object-position: center;
     border: $border-width solid $p-yellow;
-    margin-bottom: 1vmin;
+    margin-bottom: 0.5rem;
     position: relative;
   }
 
@@ -81,7 +85,7 @@
     font-size: 75%;
     background-color: $p-yellow;
     color: $black;
-    padding: 0.25vmin 2vmin 0.5vmin;
+    padding: 0.2rem 1rem 0.3rem;
     line-height: 1.2;
   }
 
@@ -104,19 +108,19 @@
     display: flex;
     align-items: center;
     line-height: 1.2;
-    padding: 1vmin 0;
+    padding: 0.5rem 0;
 
     &:not(:last-child) {
-      border-bottom: 0.25vmin solid rgba($p-blue-dark, 0.8);
+      border-bottom: 2px solid rgba($black, 0.8);
     }
   }
 
   &__attack-energy-cost {
     @include center;
     flex-wrap: wrap;
-    flex: 0 0 3.5rem;
+    flex: 0 0 3.75rem;
     font-size: calc(2 * #{$card-font-size});
-    margin-right: 1vmin;
+    margin-right: 0.5rem;
   }
 
   &__attack-name {
@@ -124,7 +128,7 @@
   }
 
   &__attack-name-description {
-    margin-right: 1vmin;
+    margin-right:0.5rem;
   }
 
   &__attack-description {
@@ -140,10 +144,10 @@
     display: flex;
     align-items: flex-start;
     width: 100%;
-    margin-bottom: 1vmin;
+    margin-bottom: 0.5rem;
     font-size: 80%;
-    padding-top: 1vmin;
-    border-top: 0.25vmin solid rgba($p-blue-dark, 0.8);
+    padding-top: 0.5rem;
+    border-top: 2px solid rgba($p-blue-dark, 0.8);
   }
 
   &__utility-stat {
@@ -153,18 +157,18 @@
     align-items: center;
 
     &:not(:last-child) {
-      margin-right: 2vmin;
+      margin-right: 0.5rem;
     }
   }
 
   &__utility-stat-text {
     @include ff-medium;
     line-height: 1;
-    margin-bottom: 1vmin;
+    margin-bottom: 0.25rem;
   }
 
   .type.weakness {
-    width: 4vmin;
+    width: 2rem;
   }
 
   .resistance {
@@ -174,16 +178,17 @@
 
   &__description {
     @include ff-medium;
-    font-size: 80%;
+    font-size: 70%;
+    letter-spacing: 0.3px;
     line-height: 1.2;
     font-style: italic;
-    padding: 0.5vmin 1vmin 0.75vmin;
-    border: 0.4vmin solid $p-yellow;
+    padding: 0.2rem 0.5rem 0.3rem;
+    border: 2px solid $p-yellow;
   }
 
   &__footer {
     font-size: 70%;
     opacity: 0.8;
-    margin: 0.25vmin 0;
+    margin: 0.25rem 0;
   }
 }
