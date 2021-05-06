@@ -52,14 +52,17 @@
 	},
 	"dependencies": {
 		"@babel/polyfill": "^7.12.1",
+		"@react-spring/web": "^9.1.2",
 		"axios": "^0.21.1",
 		"react": "^17.0.2",
+		"react-animated-3d-card": "^1.0.2",
 		"react-dom": "^17.0.2",
 		"react-icons": "^4.2.0",
 		"react-redux": "^7.2.4",
 		"react-router": "^5.2.0",
 		"react-router-dom": "^5.2.0",
 		"redux": "^4.1.0",
-		"redux-thunk": "^2.3.0"
+		"redux-thunk": "^2.3.0",
+		"spring": "0.0.0"
 	}
 }

@@ -6,27 +6,27 @@ import { useSelector } from "react-redux";
 import Nav from "./components/Nav";
 import NewCard from "./components/NewCard";
 import Error404 from "./components/Error404";
-import { selectModalContentExists } from "./store/selectors";
-// import { selectCards, selectMessage, selectModalContentExists } from "./store/selectors";
+// import { selectModalContentExists } from "./store/selectors";
+import { selectCards, selectMessage, selectModalContentExists } from "./store/selectors";
 // import Banner from "./components/Banner";
 import Modal from "./components/Modal";
 import Cards from "./components/Cards";
 import Card from "./components/Card";
-// import { dropAllEntriesFromApi } from "./api";
+import { dropAllEntriesFromApi } from "./api";
 
 const App = () => {
-	// const message = useSelector(selectMessage);
-	// const cards = useSelector(selectCards);
+	const message = useSelector(selectMessage);
+	const cards = useSelector(selectCards);
 	const modalContentExists = useSelector(selectModalContentExists);
 
 	return (
 		<div className="app">
 			<Router>
 				<Nav />
-				{/* <div className="message">{message}</div>
+				<div className="message">{message}</div>
 				<button type="button" onClick={() => dropAllEntriesFromApi(cards.map(({ id }) => id))}>
 					Drop all entries
-				</button> */}
+				</button>
 				{modalContentExists && <Modal />}
 				{/* <Banner /> */}
 				<Switch>

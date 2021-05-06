@@ -63,10 +63,9 @@ export const deleteCard = (id, history) => {
 export const generateCards = (quantity) => {
 	if (quantity >= 50) return null;
 
-	return (dispatch) => api.generateCards(quantity, (cards) => {
-		dispatch({
-			type: types.GENERATE_CARDS,
-			cards
-		});
+	return () => api.generateCards(quantity, (cards) => {
+		cards.forEach((card) => {
+      api.createCardFromApi(card, (data) => console.log(data));
+    });
 	});
 };

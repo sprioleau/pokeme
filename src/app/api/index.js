@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getName, types, weaknesses, getRandomFromArray } from "./functions/api.functions";
+import { getName, types, getRandomFromArray } from "./functions/api.functions";
+// import { getName, types, weaknesses, getRandomFromArray } from "./functions/api.functions";
 
 const ROOT_URL = "https://platform.cs52.me/api";
 const API_KEY = "s_prioleau";
@@ -17,6 +18,7 @@ export const fetchCardsFromApi = async (callback) => {
 
 // Create
 export const createCardFromApi = async (card, callback) => {
+	console.log("JSON.stringify(card):", JSON.stringify(card));
 	const cardObject = {
 		title: JSON.stringify(card),
 	};
@@ -66,13 +68,22 @@ export const generateCards = async (quantity, callback) => {
 			name: getName(name),
 			photoUrl: picture.large,
 			type: getRandomFromArray(types),
-			attacks: ["Kick", "Punch"],
+			attacks: [
+				{
+					name: "Kick",
+					description: "Does 40 damage plus 10 more damage for each type stone. You can's add more than 20 damage this way.",
+					stones: {
+						energyCost: 3,
+						damage: "40+"
+					}
+				}
+			],
 			height: dob.age,
 			weight: dob.age * 2,
-			weakness: getRandomFromArray(weaknesses),
+			weakness: getRandomFromArray(types),
 			retreatCost: getRandomFromArray([1, 2, 3])
 		}));
-		// console.log("cards:", cards);
+		console.log("cards:", cards);
 		return callback(cards);
 	} catch (error) {
 		return console.error("🔴 Uh oh! There was an error when trying to generate cards.", error);

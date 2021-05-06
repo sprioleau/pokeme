@@ -1,6 +1,20 @@
+.card-positioner {
+  @include center;
+  flex-direction: column;
+}
+
+.divider {
+  display: block;
+  flex: 0 0 2px;
+  height: 2px;
+  width: 100%;
+  background-color: $black;
+  margin: 1vmin 0;
+}
+
 .card {
-  $card-font-size: 2vw;
-  width: calc(80vmin - 2 * #{$body-padding});
+  $card-font-size: 3vmin;
+  // width: calc(80vmin - 2 * #{$body-padding});
   background-color: $p-blue;
   border: 2.5vmin solid $p-yellow;
   border-radius: 1.5vmin;
@@ -8,7 +22,7 @@
   font-size: 2vw;
   
   &__container {
-    @include aspect-ratio-parent(4 / 5);
+    @include aspect-ratio-parent(400 / 650);
     overflow: visible;
   }
 
@@ -46,9 +60,106 @@
   &__type-badge {
     width: 8vmin;
   }
-
+  
   &__image {
-    // width: 100%;
-    box-shadow: 0 0 0 0.75vmin $p-yellow inset;
+    $border-width: 1.5vmin;
+    width: calc(100% - 2 * #{$border-width});
+    height: calc(40% - 2 * #{$border-width});
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    border: 1.5vmin solid $p-yellow;
+    margin-bottom: 1vmin;
+    position: relative;
+  }
+
+  &__anatomy {
+    @include center;
+    @include ff-medium;
+    font-size: 80%;
+    width: 100%;
+    background-color: $p-yellow;
+    color: $black;
+  }
+
+  &__anatomy-text {
+    margin-bottom: 0;
+
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__attack {
+    display: flex;
+    align-items: center;
+    line-height: 1.2;
+    padding: 2vmin 0;
+  }
+
+  &__attack-energy-cost {
+    flex: 0 0 3rem;
+    font-size: calc(2 * #{$card-font-size});
+  }
+
+  &__attack-name {
+    @include ff-medium;
+  }
+
+  &__attack-description {
+    font-size: 80%;
+  }
+
+  &__attack-damage {
+    flex: 0 0 3rem;
+    font-size: calc(2 * #{$card-font-size});
+  }
+
+  &__utility-stats {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 1vmin;
+  }
+
+  &__utility-stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+     &:not(:last-child) {
+      margin-right: 2vmin;
+    }
+  }
+
+  &__utility-stat-text {
+    @include ff-medium;
+    line-height: 1;
+    margin-bottom: 1vmin;
+  }
+
+  .type.weakness {
+    width: 4vmin;
+  }
+
+  .resistance {
+    flex: 1 0;
+    text-align: center;
+  }
+
+  &__description {
+    @include ff-medium;
+    font-size: 80%;
+    line-height: 1.2;
+    font-style: italic;
+    padding: 0.5vmin;
+    border: 0.4vmin solid $p-yellow;
+  }
+
+
+  &__footer {
+    font-size: 70%;
+    opacity: 0.8
   }
 }
