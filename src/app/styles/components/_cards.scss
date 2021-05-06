@@ -20,7 +20,8 @@
 
   &__card {
     @include aspect-ratio-parent($aspect-ratio);
-    background-color: $p-blue;
+    background-size: cover; 
+    background-position: center;
     border: 0.5rem solid $p-yellow;
     margin-bottom: 0.75rem;
     border-radius: $corner-radius;

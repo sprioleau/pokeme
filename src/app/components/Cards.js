@@ -33,7 +33,7 @@ const Cards = () => {
           return (
             <li key={card.id} className="cards__list-item">
               <NavLink to={`/cards/${card.id}`}>
-                <div key={card.id} className="cards__card">
+                <div key={card.id} className="cards__card" style={{ backgroundImage: "url(../images/card-bg.png)" }}>
                   <div className="cards__card-wrapper" />
                 </div>
                 <img className="cards__card-type-badge" src={`../images/pokeme-types/${cardContent.type ? `${cardContent.type.toLowerCase()}.svg` : "bug.svg"}`} alt={cardContent.name} />
