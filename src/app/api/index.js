@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { getName, types, getRandomFromArray, getAttacks, getHitPoints } from "./functions/api.functions";
+import { getName, getRandomFromArray, getAttacks, getHitPoints } from "./functions/api.functions";
+import pokemonTypes from "../data/pokemon-types";
 import moves from "../data/pokemon-moves";
 
 const ROOT_URL = "https://platform.cs52.me/api";
@@ -73,7 +74,7 @@ export const generateCards = async (quantity, callback) => {
 		const cards = data.results.map(({ name, picture, dob }) => ({
 			name: getName(name),
 			photoUrl: picture.large,
-			type: getRandomFromArray(types),
+			type: getRandomFromArray(pokemonTypes),
 			attacks: getAttacks(moves),
 			hitPoints: getHitPoints(),
 			height: {
@@ -81,7 +82,7 @@ export const generateCards = async (quantity, callback) => {
 				in: 10
 			},
 			weight: dob.age * 2,
-			weakness: getRandomFromArray(types),
+			weakness: getRandomFromArray(pokemonTypes),
 			retreatCost: getRandomFromArray([1, 2, 3]),
 			description: "A lovely PokéMe with an exceptional personality."
 		}));

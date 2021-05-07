@@ -57,8 +57,6 @@
 		"@emotion/styled": "^11.3.0",
 		"@react-spring/web": "^9.1.2",
 		"axios": "^0.21.1",
-		"formik": "^2.2.6",
-		"formik-chakra-ui": "^1.4.6",
 		"framer-motion": "^4.1.11",
 		"react": "^17.0.2",
 		"react-animated-3d-card": "^1.0.2",
@@ -70,7 +68,6 @@
 		"react-toastify": "^7.0.4",
 		"redux": "^4.1.0",
 		"redux-thunk": "^2.3.0",
-		"spring": "0.0.0",
-		"yup": "^0.32.9"
+		"spring": "0.0.0"
 	}
 }

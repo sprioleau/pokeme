@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Heading } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme, Heading } from "@chakra-ui/react";
 import { createCard, toggleModalVisibility } from "../store/actions";
-import Form from "./Form";
+import Form from "./NewCardForm";
 
 const NewCard = () => {
 	const [content, setContent] = useState("");
@@ -20,12 +20,26 @@ const NewCard = () => {
 
 	const handleCloseModal = () => dispatch(toggleModalVisibility());
 
+	const customTheme = extendTheme({
+		styles: {
+			global: {
+				body: {
+					fontFamily: null,
+					lineHeight: null,
+					bg: null
+				}
+			}
+		}
+	});
+
 	return (
 		<div className="new-card">
-				<Heading as="h1" size="xl" textAlign="center">
+			<ChakraProvider theme={customTheme}>
+				<Heading as="h1" color="whiteAlpha.900" size="xl" textAlign="center">
 					Create a PokéMe Card
 				</Heading>
 				<Form />
+			</ChakraProvider>
 			<form className="new-card__form" onSubmit={(e) => e.preventDefault()}>
 				<fieldset className="new-card__group">
 					<legend className="new-card__legend">Create a new card</legend>

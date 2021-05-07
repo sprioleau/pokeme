@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 import Nav from "./components/Nav";
 import NewCard from "./components/NewCard";
 import Error404 from "./components/Error404";
-import { selectMessage, selectModalContentExists } from "./store/selectors";
+import { selectModalContentExists } from "./store/selectors";
 import Banner from "./components/Banner";
 import Modal from "./components/Modal";
 import Cards from "./components/Cards";
@@ -15,14 +15,12 @@ import Card from "./components/Card";
 import "react-toastify/dist/ReactToastify.min.css";
 
 const App = () => {
-	const message = useSelector(selectMessage);
 	const modalContentExists = useSelector(selectModalContentExists);
 
 	return (
 		<div className="app">
 			<Router>
 				<Nav />
-				<div className="message">{message}</div>
 				{modalContentExists && <Modal />}
 				<ToastContainer
 					position="bottom-right"
