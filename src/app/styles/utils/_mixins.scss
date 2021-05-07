@@ -44,11 +44,11 @@ $bp-large: 1180px;
 	}
 }
 
-@mixin shadow($color: $v-pink-500) {
-	box-shadow: 0 0 25px -5px rgba(darken($color, 10%), 0.2), 0 0.5rem 15px -8px rgba(darken($color, 10%), 0.3);
+@mixin shadow($color: $p-blue) {
+	box-shadow: 0 0 25px -5px rgba(darken($color, 20%), 0.2), 0 0.5rem 15px -8px rgba(darken($color, 10%), 0.3);
 }
 
-@mixin flat-shadow($color: $v-pink-500) {
+@mixin flat-shadow($color: $p-blue) {
 	box-shadow: 0 0 0 5px rgba(darken($color, 20%), 0.7);
 }
 

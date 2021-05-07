@@ -1,0 +1,36 @@
+.btn {
+  @include ff-medium;
+  @include transition;
+  @include shadow($p-blue);
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  vertical-align: middle;
+  outline: none;
+  border: none;
+  width: auto;
+  line-height: 1.2;
+  border-radius: 0.5rem;
+  height: 3rem;
+  min-width: 3rem;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  padding: 0.75rem 1.5rem;
+  background-color: $p-yellow;
+  color: $black;
+  transform-origin: center;
+
+  &:hover {
+    transform: scale(1.03);
+    background-color: $p-yellow-dark;
+    cursor: pointer;
+  }
+
+  .btn-icon {
+    display: inline-flex;
+    margin: 0;
+    margin-right: 0.5rem;
+  }
+}

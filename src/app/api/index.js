@@ -1,7 +1,7 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { getName, types, getRandomFromArray, getAttacks, getHitPoints } from "./functions/api.functions";
 import moves from "../data/pokemon-moves";
-// import { getName, types, weaknesses, getRandomFromArray } from "./functions/api.functions";
 
 const ROOT_URL = "https://platform.cs52.me/api";
 const API_KEY = "s_prioleau";
@@ -13,7 +13,8 @@ export const fetchCardsFromApi = async (callback) => {
 		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`);
 		return callback(data);
 	} catch (error) {
-		return console.error("🔴 Uh oh! We got an error when trying to load your cards.", error);
+		toast("🔴 Uh oh! We got an error when trying to load your cards.");
+		return console.error(error);
 	}
 };
 
@@ -28,7 +29,8 @@ export const createCardFromApi = async (card, callback) => {
 		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`, cardObject);
 		return callback(data);
 	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to crate your card.", error);
+				toast("🔴 Uh oh! There was an error when trying to crate your card.");
+		return console.error(error);
 	}
 };
 
@@ -38,7 +40,8 @@ export const fetchCardFromApi = async (id, callback) => {
 		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
 		return callback(data);
 	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to update your card.", error);
+		toast("🔴 Uh oh! There was an error when trying to update your card.");
+		return console.error(error);
 	}
 };
 
@@ -48,7 +51,8 @@ export const updateCardFromApi = async (id, updatedFields, callback) => {
 		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`, updatedFields);
 		return callback(data);
 	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to update your card.", error);
+		toast("🔴 Uh oh! There was an error when trying to update your card.");
+		return console.error(error);
 	}
 };
 
@@ -58,7 +62,8 @@ export const deleteCardFromApi = async (id, callback) => {
 		const { data } = await axios.delete(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
 		return callback(data);
 	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to delete your card.", error);
+		toast("🔴 Uh oh! There was an error when trying to delete your card.");
+		return console.error(error);
 	}
 };
 
@@ -83,8 +88,9 @@ export const generateCards = async (quantity, callback) => {
 		console.log("cards:", cards);
 		return callback(cards);
 	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to generate cards.", error);
+		toast("🔴 Uh oh! There was an error when trying to generate cards.");
+		return console.error(error);
 	}
 };
 
-export const dropAllEntriesFromApi = (arrayOfIds) => arrayOfIds.forEach((id) => deleteCardFromApi(id, () => console.log(`deleted entry with id: ${id}`)));
+export const dropAllEntriesFromApi = (arrayOfIds) => arrayOfIds.forEach((id) => deleteCardFromApi(id, () => toast(`Deleted entry with id: ${id}`)));

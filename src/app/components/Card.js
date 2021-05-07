@@ -46,7 +46,7 @@ const Card = () => {
               </div>
               <ul className="card__attacks">{cardContent.attacks.map((attack) => (
                 <li key={attack.name} className="card__attack">
-                  <div className="card__attack-energy-cost"><EnergyCostIcon cost={attack.energyCost} type={attack.type} /></div>
+                  <div className="card__attack-energy-cost"><EnergyCostIcons cost={attack.energyCost} type={attack.type} /></div>
                   <div className="card__attack-name-description"><span className="card__attack-name">{attack.name}</span> <span className="card__attack-description">{attack.description}</span></div>
                   <div className="card__attack-damage">{attack.damage}</div>
                 </li>
@@ -66,7 +66,7 @@ const Card = () => {
                 </li>
                 <li className="card__utility-stat">
                   <span className="card__utility-stat-text">retreat cost</span>
-                  <div className="card__icon type"><RetreatCostIcon cost={cardContent.retreatCost} /></div>
+                  <div className="card__icon type"><RetreatCostIcons cost={cardContent.retreatCost} /></div>
                 </li>
               </ul>
               <p className="card__description">{cardContent.description}</p>
@@ -83,5 +83,8 @@ const Card = () => {
 
 export default Card;
 
-const RetreatCostIcon = ({ cost }) => (cost === 0 ? "0" : Array(cost).fill(<img className="icon small" src="../images/pokeme-types/retreat.svg" alt="retreat symbol" />));
-const EnergyCostIcon = ({ cost, type }) => (Array(cost).fill(<img className="icon small" src={`../images/pokeme-types/${type.toLowerCase()}.svg`} alt="retreat symbol" />));
+const RetreatCostIcons = ({ cost }) => (cost === 0 ? "0" : Array.from(Array(cost),
+  (_, index) => (<img key={index} className="icon small" src="../images/pokeme-types/retreat.svg" alt="retreat symbol" />)));
+
+const EnergyCostIcons = ({ cost, type }) => Array.from(Array(cost),
+  (_, index) => (<img key={index} className="icon small" src={`../images/pokeme-types/${type.toLowerCase()}.svg`} alt="retreat symbol" />));

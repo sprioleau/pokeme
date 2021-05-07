@@ -5,7 +5,7 @@ const Nav = () => (
   <nav>
     <ul>
       <li>
-        <NavLink to="/cards">Cards</NavLink>
+        <NavLink to="/cards">All PokéMe Cards</NavLink>
       </li>
     </ul>
   </nav>

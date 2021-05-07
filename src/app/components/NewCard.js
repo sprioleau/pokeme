@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Heading } from "@chakra-ui/react";
 import { createCard, toggleModalVisibility } from "../store/actions";
+import Form from "./Form";
 
 const NewCard = () => {
 	const [content, setContent] = useState("");
@@ -20,6 +22,10 @@ const NewCard = () => {
 
 	return (
 		<div className="new-card">
+				<Heading as="h1" size="xl" textAlign="center">
+					Create a PokéMe Card
+				</Heading>
+				<Form />
 			<form className="new-card__form" onSubmit={(e) => e.preventDefault()}>
 				<fieldset className="new-card__group">
 					<legend className="new-card__legend">Create a new card</legend>

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 // import * as api from "../api";
-import { fetchCards, generateCards } from "../store/actions/index";
+import { fetchCards } from "../store/actions/index";
 import { selectCards } from "../store/selectors";
 
 const Cards = () => {
@@ -14,8 +14,6 @@ const Cards = () => {
 		dispatch(fetchCards());
 	}, []);
 
-  const handleGenerateCards = () => dispatch(generateCards(20));
-
   // const handleSaveCardsToDatabase = () => {
   //   cards.forEach((card) => {
   //     api.createCardFromApi(card, (data) => console.log(data));
@@ -24,7 +22,6 @@ const Cards = () => {
 
   return (
     <div className="cards">
-      <button type="button" onClick={handleGenerateCards}>Generate Cards</button>
       {/* {cards.length > 0 && <button type="button" onClick={handleSaveCardsToDatabase}>Save Cards to Database</button>} */}
       <ul className="cards__list">
         {cards.length > 0 && cards.map((card) => {

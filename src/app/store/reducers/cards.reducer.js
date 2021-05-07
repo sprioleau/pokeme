@@ -45,6 +45,7 @@ const CardsReducer = (state = initialState, action) => {
 		case types.DELETE_CARD: {
 			return {
 				...state,
+				cards: [...state.cards.filter((card) => card.id === action.id)],
 				message: action.message
 			};
 		}
