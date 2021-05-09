@@ -34,3 +34,9 @@
     margin-right: 0.5rem;
   }
 }
+
+a.no-decoration {
+  &:hover {
+    text-decoration: none;
+  }
+}

@@ -4,7 +4,7 @@ const initialState = {
 	cards: [],
 	currentCard: {},
 	message: "",
-	modalContent: null,
+	modalContent: {},
 };
 
 const CardsReducer = (state = initialState, action) => {
@@ -13,6 +13,7 @@ const CardsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				cards: action.cards,
+				currentCard: {}
 			};
 		}
 
@@ -20,7 +21,8 @@ const CardsReducer = (state = initialState, action) => {
 		case types.CREATE_CARD: {
 			return {
 				...state,
-				cards: [...state.cards, action.newCards],
+				cards: [...state.cards, action.newCard],
+				modalContent: {},
 			};
 		}
 
@@ -37,7 +39,8 @@ const CardsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				cards: [...state.cards, action.updatedCard],
-				currentCard: action.updatedCard
+				currentCard: action.updatedCard,
+				modalContent: {},
 			};
 		}
 
@@ -50,17 +53,17 @@ const CardsReducer = (state = initialState, action) => {
 			};
 		}
 
+		case types.DELETE_ALL_CARDS: {
+			return {
+				...state,
+				cards: [],
+			};
+		}
+
 		case types.TOGGLE_MODAL_VISIBILITY: {
 			return {
 				...state,
 				modalContent: action.modalContent
-			};
-		}
-
-		case types.GENERATE_CARDS: {
-			return {
-				...state,
-				cards: action.cards,
 			};
 		}
 

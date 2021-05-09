@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-// import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-// import * as api from "../api";
 import { fetchCards } from "../store/actions/index";
 import { selectCards } from "../store/selectors";
 
@@ -12,20 +10,13 @@ const Cards = () => {
 
   useEffect(() => {
 		dispatch(fetchCards());
-	}, []);
-
-  // const handleSaveCardsToDatabase = () => {
-  //   cards.forEach((card) => {
-  //     api.createCardFromApi(card, (data) => console.log(data));
-  //   });
-  // };
+  }, []);
 
   return (
     <div className="cards">
-      {/* {cards.length > 0 && <button type="button" onClick={handleSaveCardsToDatabase}>Save Cards to Database</button>} */}
       <ul className="cards__list">
         {cards.length > 0 && cards.map((card) => {
-          const cardContent = JSON.parse(card.title);
+          const cardContent = JSON.parse(card?.title);
 
           return (
             <li key={card.id} className="cards__list-item">
@@ -39,17 +30,13 @@ const Cards = () => {
             </li>
           );
         })}
-        <li key="blank-1" className="cards__list-item collapse" />
-        <li key="blank-2" className="cards__list-item collapse" />
-        <li key="blank-3" className="cards__list-item collapse" />
-        <li key="blank-4" className="cards__list-item collapse" />
-        <li key="blank-5" className="cards__list-item collapse" />
-        <li key="blank-6" className="cards__list-item collapse" />
-        <li key="blank-7" className="cards__list-item collapse" />
-        <li key="blank-8" className="cards__list-item collapse" />
+        <BlankCard quantity={8} />
       </ul>
     </div>
   );
 };
 
 export default Cards;
+
+const BlankCard = ({ quantity }) => Array.from(Array(quantity),
+  (_, index) => (<li key={`blank-${index}`} className="cards__list-item collapse" />));

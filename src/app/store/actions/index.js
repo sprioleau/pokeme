@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import types from "../types";
 
 import * as api from "../../api";
@@ -9,10 +10,12 @@ export const toggleModalVisibility = (modalContent) => ({
 
 // --- Thunks --- //
 export const fetchCards = () => {
-	return (dispatch) => api.fetchCardsFromApi((cards) => dispatch({
-		type: types.FETCH_CARDS,
-		cards,
-	}));
+	return (dispatch) => {
+		api.fetchCardsFromApi((cards) => dispatch({
+			type: types.FETCH_CARDS,
+			cards,
+		}));
+	};
 };
 
 // Create
@@ -40,11 +43,19 @@ export const fetchCard = (id, callback) => {
 };
 
 // Update
-export const updateCard = (fields) => {
-	return (dispatch) => api.updateCardFromApi(fields, (updatedCard) => dispatch({
-		type: types.UPDATE_CARD,
-		updatedCard
-	}));
+export const updateCard = (id, fields, history) => {
+	return (dispatch) => api.updateCardFromApi(id, fields, (updatedCard) => {
+		dispatch({
+			type: types.UPDATE_CARD,
+			updatedCard
+		});
+
+		// Reference: https://stackoverflow.com/questions/44121069/how-to-pass-params-with-history-push-link-redirect-in-react-router-v4
+		history.push({
+			pathname: "/refresh",
+			state: { id }
+		});
+	});
 };
 
 // Delete
@@ -61,17 +72,34 @@ export const deleteCard = (id, history) => {
 	});
 };
 
-export const generateCards = (quantity) => {
+export const deleteAllCards = (arrayOfIds, history) => {
+	return (dispatch) => {
+		arrayOfIds.forEach((id) => api.deleteCardFromApi(id, ({ message }) => {
+			if (message.includes("success")) toast(`Deleted card with ID: ${id}`);
+		}));
+
+		dispatch({
+			type: types.DELETE_ALL_CARDS,
+			ids: arrayOfIds
+		});
+
+		return history.push("/cards");
+	};
+};
+
+export const generateCards = (quantity, history) => {
 	if (quantity >= 50) return null;
 
 	return (dispatch) => api.generateCards(quantity, (cards) => {
-		cards.forEach((card) => {
-      api.createCardFromApi(card, (data) => console.log(data));
+		cards.forEach((cardData) => {
+			api.createCardFromApi(cardData, (newCardInDatabase) => {
+				dispatch({
+					type: types.CREATE_CARD,
+					newCard: newCardInDatabase
+				});
+			});
 		});
 
-		dispatch({
-			type: types.FETCH_CARDS,
-			cards
-		});
+		return history.push("/cards");
 	});
 };

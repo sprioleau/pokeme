@@ -21,14 +21,14 @@ export const fetchCardsFromApi = async (callback) => {
 
 // Create
 export const createCardFromApi = async (card, callback) => {
-	console.log("JSON.stringify(card):", JSON.stringify(card));
 	const cardObject = {
 		title: JSON.stringify(card),
 	};
 
 	try {
 		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`, cardObject);
-		return callback(data);
+		if (callback) return callback(data);
+		return null;
 	} catch (error) {
 				toast("🔴 Uh oh! There was an error when trying to crate your card.");
 		return console.error(error);
@@ -39,7 +39,8 @@ export const createCardFromApi = async (card, callback) => {
 export const fetchCardFromApi = async (id, callback) => {
 	try {
 		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
-		return callback(data);
+		if (callback) return callback(data);
+		return null;
 	} catch (error) {
 		toast("🔴 Uh oh! There was an error when trying to update your card.");
 		return console.error(error);
@@ -49,7 +50,8 @@ export const fetchCardFromApi = async (id, callback) => {
 // Update
 export const updateCardFromApi = async (id, updatedFields, callback) => {
 	try {
-		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`, updatedFields);
+		const updatedItemForDatabase = { title: JSON.stringify(updatedFields) };
+		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`, updatedItemForDatabase);
 		return callback(data);
 	} catch (error) {
 		toast("🔴 Uh oh! There was an error when trying to update your card.");
@@ -61,7 +63,8 @@ export const updateCardFromApi = async (id, updatedFields, callback) => {
 export const deleteCardFromApi = async (id, callback) => {
 	try {
 		const { data } = await axios.delete(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
-		return callback(data);
+		if (callback) return callback(data);
+		return null;
 	} catch (error) {
 		toast("🔴 Uh oh! There was an error when trying to delete your card.");
 		return console.error(error);
@@ -84,9 +87,9 @@ export const generateCards = async (quantity, callback) => {
 			weight: dob.age * 2,
 			weakness: getRandomFromArray(pokemonTypes),
 			retreatCost: getRandomFromArray([1, 2, 3]),
-			description: "A lovely PokéMe with an exceptional personality."
+			description: "A lovely PokéMe with an exceptional personality.",
+			message: "# Catchin 'em all!"
 		}));
-		console.log("cards:", cards);
 		return callback(cards);
 	} catch (error) {
 		toast("🔴 Uh oh! There was an error when trying to generate cards.");

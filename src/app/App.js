@@ -4,8 +4,7 @@ import "./styles/style.scss";
 import { useSelector } from "react-redux";
 
 import { ToastContainer } from "react-toastify";
-import Nav from "./components/Nav";
-import NewCard from "./components/NewCard";
+// import Nav from "./components/Nav";
 import Error404 from "./components/Error404";
 import { selectModalContentExists } from "./store/selectors";
 import Banner from "./components/Banner";
@@ -13,6 +12,7 @@ import Modal from "./components/Modal";
 import Cards from "./components/Cards";
 import Card from "./components/Card";
 import "react-toastify/dist/ReactToastify.min.css";
+import RefreshCard from "./components/RefreshCard";
 
 const App = () => {
 	const modalContentExists = useSelector(selectModalContentExists);
@@ -20,7 +20,6 @@ const App = () => {
 	return (
 		<div className="app">
 			<Router>
-				<Nav />
 				{modalContentExists && <Modal />}
 				<ToastContainer
 					position="bottom-right"
@@ -36,8 +35,8 @@ const App = () => {
 				<Banner />
 				<Switch>
 					<Route exact path={["/", "/cards"]} component={Cards} />
-					<Route path="/cards/new" component={NewCard} />
 					<Route path="/cards/:cardId" component={Card} />
+					<Route path="/refresh" component={RefreshCard} />
 					<Route component={Error404} />
 				</Switch>
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { ChakraProvider, extendTheme, Heading } from "@chakra-ui/react";
-import NewCardForm from "./NewCardForm";
+import EditCardForm from "./EditCardForm";
 
-const NewCard = () => {
+const EditCard = () => {
 	const customTheme = extendTheme({
 		styles: {
 			global: {
@@ -19,12 +19,12 @@ const NewCard = () => {
 		<div className="new-card">
 			<ChakraProvider theme={customTheme}>
 				<Heading as="h1" color="whiteAlpha.900" size="xl" textAlign="center">
-					Create a PokéMe Card
+					Edit PokéMe Card
 				</Heading>
-				<NewCardForm />
+				<EditCardForm />
 			</ChakraProvider>
 		</div>
 	);
 };
 
-export default NewCard;
+export default EditCard;

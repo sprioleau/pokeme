@@ -1,3 +1,0 @@
-- Add form for data entry (use Formik?)
-- Build out toolbar for going back to all cards and editing
-- Add Toast for deleting and creating new cards

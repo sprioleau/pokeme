@@ -12,7 +12,7 @@ const Modal = () => {
 
   const modalWrapper = useRef(null);
 
-  useDismissOnOutsideClick(modalWrapper, modalContent, () => dispatch(toggleModalVisibility()));
+  useDismissOnOutsideClick(modalWrapper, modalContent, () => dispatch(toggleModalVisibility({})));
 
   if (!modalContentExists) return null;
 

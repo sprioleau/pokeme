@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  // ChakraProvider,
   Box,
   VStack,
   HStack,
@@ -20,33 +19,40 @@ import {
   Button,
   Textarea
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import moves from "../data/pokemon-moves";
 import pokemonTypes from "../data/pokemon-types";
 import { getRandomFromArray } from "../api/functions/api.functions";
-import { createCard, toggleModalVisibility } from "../store/actions/index";
+import { toggleModalVisibility, updateCard } from "../store/actions/index";
+import { selectCurrentCard } from "../store/selectors/index";
 
-const NewCardForm = () => {
+const EditCardForm = () => {
+  const currentCard = useSelector(selectCurrentCard);
+  const cardContent = JSON.parse(currentCard.title);
+  const { id } = currentCard;
+  const history = useHistory();
+
   const formatFeet = (value) => `${value.toString()} ft.`;
   const formatInches = (value) => `${value.toString()} in.`;
   const formatWeight = (value) => `${value.toString()} lbs.`;
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
-  const [name, setName] = useState("");
-  const [photoUrl, setPhotoUrl] = useState("");
-  const [type, setType] = useState(getRandomFromArray(pokemonTypes.slice(0, 5)));
-  const [weakness, setWeakness] = useState(getRandomFromArray(pokemonTypes.slice(5, pokemonTypes.length)));
-  const [feet, setFeet] = useState(formatFeet(5));
-  const [inches, setInches] = useState(formatInches(6));
-  const [weight, setWeight] = useState(formatWeight(100));
-  const [move1, setMove1] = useState(getRandomFromArray(moves));
-  const [move2, setMove2] = useState({});
-  const [hitPoints, setHitPoints] = useState(100);
-  const [message, setMessage] = useState("");
+  const secondMove = cardContent.attacks[1] ? cardContent.attacks[1] : {};
+
+  const [name, setName] = useState(cardContent.name);
+  const [photoUrl, setPhotoUrl] = useState(cardContent.photoUrl);
+  const [type, setType] = useState(cardContent.type);
+  const [weakness, setWeakness] = useState(cardContent.weakness);
+  const [feet, setFeet] = useState(`${cardContent.height.ft} ft.`);
+  const [inches, setInches] = useState(`${cardContent.height.ft} in.`);
+  const [weight, setWeight] = useState(`${cardContent.height.ft} lbs.`);
+  const [move1, setMove1] = useState(cardContent.attacks[0]);
+  const [move2, setMove2] = useState(secondMove);
+  const [hitPoints, setHitPoints] = useState(cardContent.hitPoints);
+  const [message, setMessage] = useState(cardContent.message);
 
   const [nameHasBlurred, setNameHasBlurred] = useState(false);
   const [photoUrlHasBlurred, setPhotoUrlHasBlurred] = useState(false);
@@ -67,7 +73,7 @@ const NewCardForm = () => {
   const checkPhotoInUrl = (url) => url.match(/\.(jpeg|jpg|gif|png)$/) !== null;
 
   const isValidUrl = checkPhotoInUrl(photoUrl);
-  const isValidName = (userProvidedName) => userProvidedName.length > 2 && userProvidedName.length < 25;
+  const isValidName = (userProvidedName) => userProvidedName.length > 2 && userProvidedName.length < 15;
 
   const handleNameFocus = () => setNameHasBlurred(false);
   const handleNameBlur = () => setNameHasBlurred(true);
@@ -89,16 +95,16 @@ const NewCardForm = () => {
       attacks,
 			hitPoints,
 			height: {
-				ft: feet.replace(" ft.", ""),
-				in: inches.replace(" in.", ""),
+				ft: parseInt(feet.replace(" ft.", ""), 10),
+				in: parseInt(inches.replace(" in.", ""), 10),
 			},
-			weight: weight.replace(" lbs.", ""),
+			weight: parseInt(weight.replace(" lbs.", ""), 10),
 			weakness,
 			retreatCost: getRandomFromArray([1, 2, 3]),
       description: "A lovely PokéMe with an exceptional personality.",
       message
     };
-    dispatch(createCard(newCard, history));
+    dispatch(updateCard(id, newCard, history));
 	};
 
   return (
@@ -197,12 +203,12 @@ const NewCardForm = () => {
           <Textarea value={message} placeholder="Enter additional deets (supports Markdown)..." onChange={handleMessageChange} />
         </FormControl>
         <HStack width="100%">
-          <Button disabled={!isReadyToSubmit} type="submit" colorScheme="blue" width="100%">Make my PokéMe</Button>
-          <Button type="button" colorScheme="blue" variant="outline" width="100%" onClick={handleCloseModal}>Close</Button>
+          <Button disabled={!isReadyToSubmit} type="submit" colorScheme="blue" width="100%">Update PokéMe Card</Button>
+          <Button type="button" colorScheme="blue" variant="outline" width="100%" onClick={handleCloseModal}>Cancel</Button>
         </HStack>
       </VStack>
     </Box>
   );
 };
 
-export default NewCardForm;
+export default EditCardForm;

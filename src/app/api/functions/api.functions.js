@@ -7,7 +7,7 @@ export const getAttacks = (array) => {
   if (size === 1) {
     return [getRandomFromArray(array)];
   } else {
-    return [getRandomFromArray(array), getRandomFromArray(array)];
+    return [getRandomFromArray(array.slice(0, 4)), getRandomFromArray(array.slice(4, array.length))];
   }
 };
 export const getHitPoints = () => (Math.floor(Math.random() * 15) + 5) * 10;
