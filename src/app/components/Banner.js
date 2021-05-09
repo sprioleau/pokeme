@@ -43,7 +43,7 @@ function Banner() {
             </Button>
           )}
           <Button type="button" className="btn" onClick={handleGenerateCards}><span className="btn-icon"><CgCPlusPlus /></span>
-          {`Generate ${GENERATED_CARDS > 1 ? `${GENERATED_CARDS} Cards` : "1 Card"}`}
+          {`Generate ${GENERATED_CARDS > 1 ? `${GENERATED_CARDS} Cards` : "a Card"}`}
           </Button>
         </>
       )}
