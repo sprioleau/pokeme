@@ -29,6 +29,7 @@ As a note, I implemented logic to keep the Redux state and database in sync.
 - Added a toast component for notifying the user for errors with API calls
 - Added lots of styling to give it a Pokémon-inspired look and feel
 - Created functionality for generating a random PokéMe card
+- Input validation for card fields
 
 ### Supercharged Title Field
 I took the lab further by ⚡️ supercharging the `title` field with a stringified JSON object with all the data needed to render a PokéMe card. I then parsed the data comping back from the database in order to render it out into the `Card` component. This apprroach also allowed me to store an additional `message` key, where I could store Markdown to be rendered in the UI.

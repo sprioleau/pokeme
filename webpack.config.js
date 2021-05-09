@@ -69,6 +69,9 @@ module.exports = {
 			filename: "[name].css",
 		}),
 		new ESLintPlugin({}),
+		new CopyPlugin({
+			patterns: [{ from: "./src/app/images", to: "images" }],
+		}),
 		new HtmlWebpackPlugin({
 			template: "./src/index.html",
 			filename: "./index.html",
@@ -80,9 +83,6 @@ module.exports = {
 				quality: "95-100",
 			},
 			svgo: {},
-		}),
-		new CopyPlugin({
-			patterns: [{ from: "./src/app/images", to: "images" }],
 		}),
 	],
 };
