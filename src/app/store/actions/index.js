@@ -26,7 +26,10 @@ export const createCard = (fields, history) => {
 			newCard,
 		});
 
-		history.push(`/cards/${newCard.id}`);
+		history.push({
+			pathname: "/refresh",
+			state: { id: newCard.id }
+		});
 	});
 };
 
