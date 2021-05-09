@@ -9,10 +9,15 @@ Deployed URL: [pokeme-cards.netlify.app](https://pokeme-cards.netlify.app/)
 ## What Worked Well
 
 - Styling with Sass preprocessor
+- Used functional components with hooks
+- Abstracted API logic into separate file
 - Digitally reproduced a Pokémon card
 - Used 3D card effect when the card is hovered
 - Interacted with [a random user API](https://randomuser.me/)
 - Made use of publically available resources for Pokémon data and cited in code
+- Stitched together existing Pokémon logo with Pokéme name
+- Created card background texture
+- Implemented SVG background making use of [svgbackgrounds.com](https://www.svgbackgrounds.com/)
 
 ## What Didn't
 
@@ -37,4 +42,25 @@ I took the lab further by ⚡️ supercharging the `title` field with a stringif
 ## Screenshots
 
 Social Card  
-![Social Card](https://pokeme-cards.netlify.app/images/social-card/social-card-preview.png)
+![Social Card](https://pokeme-cards.netlify.app/images/social-card/social-card.png)
+
+Social Card Preview  
+![Social Card Preview](https://pokeme-cards.netlify.app/images/social-card/social-card-preview.png)
+
+Create  
+![Create](https://pokeme-cards.netlify.app/images/screenshots/create.gif)
+
+Read  
+![Read](https://pokeme-cards.netlify.app/images/screenshots/read.gif)
+
+Update  
+![Update](https://pokeme-cards.netlify.app/images/screenshots/update.gif)
+
+Delete  
+![Delete](https://pokeme-cards.netlify.app/images/screenshots/delete.gif)
+
+Delete All  
+![Delete All](https://pokeme-cards.netlify.app/images/screenshots/delete_all.gif)
+
+Generate  
+![Generate](https://pokeme-cards.netlify.app/images/screenshots/generate.gif)
