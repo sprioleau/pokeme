@@ -1,54 +1,100 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import { getName, getRandomFromArray, getAttacks, getHitPoints } from "./functions/api.functions";
+import pokemonTypes from "../data/pokemon-types";
+import moves from "../data/pokemon-moves";
 
 const ROOT_URL = "https://platform.cs52.me/api";
 const API_KEY = "s_prioleau";
+const API_ROUTE = "posts";
 
 // eslint-disable-next-line
-export const fetchPosts = async (callback) => {
+export const fetchCardsFromApi = async (callback) => {
 	try {
-		const { data } = await axios.get(`${ROOT_URL}/posts?key=${API_KEY}`);
+		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`);
 		return callback(data);
 	} catch (error) {
-		return console.error("🔴 Uh oh! We got an error when trying to load your posts.", error);
+		toast("🔴 Uh oh! We got an error when trying to load your cards.");
+		return console.error(error);
 	}
 };
 
 // Create
-export const createPost = async (post, callback) => {
+export const createCardFromApi = async (card, callback) => {
+	const cardObject = {
+		title: JSON.stringify(card),
+	};
+
 	try {
-		const { data } = await axios.post(`${ROOT_URL}/posts?key=${API_KEY}`, post);
-		return callback(data);
+		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`, cardObject);
+		if (callback) return callback(data);
+		return null;
 	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to crate your post.", error);
+				toast("🔴 Uh oh! There was an error when trying to crate your card.");
+		return console.error(error);
 	}
 };
 
 // Read
-export const fetchPost = async (id, callback) => {
+export const fetchCardFromApi = async (id, callback) => {
 	try {
-		const { data } = await axios.get(`${ROOT_URL}/posts/${id}?key=${API_KEY}`);
-		return callback(data);
+		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
+		if (callback) return callback(data);
+		return null;
 	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to update your post.", error);
+		toast("🔴 Uh oh! There was an error when trying to update your card.");
+		return console.error(error);
 	}
 };
 
 // Update
-export const updatePost = async (id, updatedFields, callback) => {
+export const updateCardFromApi = async (id, updatedFields, callback) => {
 	try {
-		const { data } = await axios.put(`${ROOT_URL}/posts/${id}?key=${API_KEY}`, updatedFields);
+		const updatedItemForDatabase = { title: JSON.stringify(updatedFields) };
+		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`, updatedItemForDatabase);
 		return callback(data);
 	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to update your post.", error);
+		toast("🔴 Uh oh! There was an error when trying to update your card.");
+		return console.error(error);
 	}
 };
 
 // Delete
-export const deletePost = async (id, callback) => {
+export const deleteCardFromApi = async (id, callback) => {
 	try {
-		const { data } = await axios.delete(`${ROOT_URL}/posts/${id}?key=${API_KEY}`);
-		return callback(data);
+		const { data } = await axios.delete(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
+		if (callback) return callback(data);
+		return null;
 	} catch (error) {
-		return console.error("🔴 Uh oh! There was an error when trying to deletee your post.", error);
+		toast("🔴 Uh oh! There was an error when trying to delete your card.");
+		return console.error(error);
 	}
 };
+
+export const generateCards = async (quantity, callback) => {
+	try {
+		const { data } = await axios.get(`https://randomuser.me/api/?results=${quantity}`);
+		const cards = data.results.map(({ name, picture, dob }) => ({
+			name: getName(name),
+			photoUrl: picture.large,
+			type: getRandomFromArray(pokemonTypes),
+			attacks: getAttacks(moves),
+			hitPoints: getHitPoints(),
+			height: {
+				ft: 5,
+				in: 10
+			},
+			weight: dob.age * 2,
+			weakness: getRandomFromArray(pokemonTypes),
+			retreatCost: getRandomFromArray([1, 2, 3]),
+			description: "A lovely PokéMe with an exceptional personality.",
+			message: "# Catchin 'em all!"
+		}));
+		return callback(cards);
+	} catch (error) {
+		toast("🔴 Uh oh! There was an error when trying to generate cards.");
+		return console.error(error);
+	}
+};
+
+export const dropAllEntriesFromApi = (arrayOfIds) => arrayOfIds.forEach((id) => deleteCardFromApi(id, () => toast(`Deleted entry with id: ${id}`)));

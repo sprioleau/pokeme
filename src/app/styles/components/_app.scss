@@ -1,6 +1,4 @@
 .app {
-	display: flex;
-	flex-direction: column;
 	max-width: 1400px;
 	margin: 0 auto;
 	height: 100%;
@@ -11,25 +9,23 @@
 	height: 100%;
 }
 
-.search-wrapper {
-	display: flex;
-	align-items: center;
-	margin-bottom: 3vw;
-	flex: 0 0;
-
-	@include sm {
-		flex-direction: column;
-	}
-}
-
-.videos {
-	display: flex;
-	align-items: flex-start;
-	flex: 1 0;
-	overflow: hidden;
-
-	@include md {
-		flex-direction: column;
-		align-items: center;
-	}
-}
+// a {
+// 	color: #777651;
+// 	color: #be631e;
+// 	color: #4169be;
+// 	color: #dab110;
+// 	color: #7AC74C;
+// 	color: #4d9c98;
+// 	color: #C22E28;
+// 	color: #A33EA1;
+// 	color: #a78b45;
+// 	color: #654ea3;
+// 	color: #c73762;
+// 	color: #6b7713;
+// 	color: #8b7b28;
+// 	color: #422d5e;
+// 	color: #4922aa;
+// 	color: #4b382b;
+// 	color: #424253;
+// 	color: #864063;
+// }

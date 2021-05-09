@@ -3,32 +3,44 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./styles/style.scss";
 import { useSelector } from "react-redux";
 
-import Nav from "./components/Nav";
-import Posts from "./components/Posts";
-import Post from "./components/Post";
-import NewPost from "./components/NewPost";
+import { ToastContainer } from "react-toastify";
 import Error404 from "./components/Error404";
-import { selectMessage, selectModalContentExists } from "./store/selectors";
+import { selectModalContentExists } from "./store/selectors";
 import Banner from "./components/Banner";
 import Modal from "./components/Modal";
+import Cards from "./components/Cards";
+import Card from "./components/Card";
+import "react-toastify/dist/ReactToastify.min.css";
+import RefreshCard from "./components/RefreshCard";
 
 const App = () => {
-	const message = useSelector(selectMessage);
 	const modalContentExists = useSelector(selectModalContentExists);
 
 	return (
-		<Router>
-			<Nav />
-			<div className="message">{message}</div>
-			{modalContentExists && <Modal />}
-			<Banner />
-			<Switch>
-				<Route exact path={["/", "/posts"]} component={Posts} />
-				<Route path="/posts/new" component={NewPost} />
-				<Route path="/posts/:postId" component={Post} />
-				<Route component={Error404} />
-			</Switch>
-		</Router>
+		<div className="app">
+			<Router>
+				{modalContentExists && <Modal />}
+				<ToastContainer
+					position="bottom-right"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					pauseOnHover={false}
+					pauseOnFocusLoss
+					rtl={false}
+					draggable
+				/>
+				<Banner />
+				<Switch>
+					<Route exact path={["/", "/cards"]} component={Cards} />
+					<Route path="/cards/:cardId" component={Card} />
+					<Route path="/refresh" component={RefreshCard} />
+					<Route component={Error404} />
+				</Switch>
+
+			</Router>
+		</div>
 	);
 };
 

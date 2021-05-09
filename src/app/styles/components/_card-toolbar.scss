@@ -1,0 +1,26 @@
+.card-toolbar {
+  display: flex;
+  padding: 0.5rem 0;
+  margin-bottom: 2rem;
+
+  & > :not(:last-child) {
+    margin-right: 0.5rem;
+  }
+
+  &__icon {
+    $icon-size: 2rem;
+    @include center;
+    @include transition;
+    width: calc(2 * #{$icon-size});
+    height: calc(2 * #{$icon-size});
+    font-size: $icon-size;
+    border-radius: 50%;
+    background-color: rgba($p-blue, 0.3);
+
+    &:hover {
+      background-color: rgba($white, 1);
+      transform: scale(1.1);
+      color: $p-blue;
+    }
+  }
+}

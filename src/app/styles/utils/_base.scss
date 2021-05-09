@@ -1,3 +1,38 @@
 body {
+	@include ui-background;
+	@include ff;
 	padding: $body-padding;
+	color: $white;
+}
+
+ul, li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: currentColor;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.icon {
+	width: 2.5rem;
+	padding: 0.15rem;
+
+	&.small {
+		width: 1.5rem;
+	}
+}
+
+h1, h2, h3, h4 {
+	margin-top: 0;
+}
+
+p {
+	margin: 0;
 }

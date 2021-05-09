@@ -1,6 +1,6 @@
-// Posts Reducer
-export const selectPosts = (state) => state.posts.posts;
-export const selectMessage = (state) => state.posts.message;
-export const selectCurrentPost = (state) => state.posts.currentPost;
-export const selectModalContent = (state) => state.posts.modalContent;
-export const selectModalContentExists = (state) => state.posts.modalContent !== null;
+// Cards Reducer
+export const selectCards = (state) => state.cards.cards;
+export const selectMessage = (state) => state.cards.message;
+export const selectCurrentCard = (state) => state.cards.currentCard;
+export const selectModalContent = (state) => state.cards.modalContent;
+export const selectModalContentExists = (state) => Object.keys(state.cards.modalContent).length > 0;
