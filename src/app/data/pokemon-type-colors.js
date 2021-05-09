@@ -14,7 +14,7 @@ export default {
   Bug: "#6b7713",
   Rock: "#8b7b28",
   Ghost: "#422d5e",
-  Dragon: "#4922aa",
+  Dragon: "#4d4d4d",
   Dark: "#4b382b",
   Steel: "#424253",
   Fairy: "#864063",
