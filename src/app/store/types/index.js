@@ -6,6 +6,7 @@ const types = {
 	DELETE_CARD: "DELETE_CARD", // Delete
 	DELETE_ALL_CARDS: "DELETE_ALL_CARDS", // Delete
 	TOGGLE_MODAL_VISIBILITY: "TOGGLE_MODAL_VISIBILITY",
+	SET_FILTER: "SET_FILTER",
 };
 
 export default types;

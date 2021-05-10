@@ -5,6 +5,7 @@ const initialState = {
 	currentCard: {},
 	message: "",
 	modalContent: {},
+	filter: ""
 };
 
 const CardsReducer = (state = initialState, action) => {
@@ -64,6 +65,13 @@ const CardsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				modalContent: action.modalContent
+			};
+		}
+
+		case types.SET_FILTER: {
+			return {
+				...state,
+				filter: action.filter
 			};
 		}
 

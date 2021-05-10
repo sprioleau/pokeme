@@ -8,6 +8,11 @@ export const toggleModalVisibility = (modalContent) => ({
 	modalContent: null ?? modalContent
 });
 
+export const setFilter = (type) => ({
+	type: types.SET_FILTER,
+	filter: type
+});
+
 // --- Thunks --- //
 export const fetchCards = () => {
 	return (dispatch) => {

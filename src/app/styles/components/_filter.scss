@@ -1,0 +1,40 @@
+.filter {
+  @include center;
+  margin-bottom: 1.5rem;
+
+  &__title {
+    margin-right: 0.5rem;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__list-item {
+    @include transition;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &__list-item-icon {
+    @include center;
+    @include transition;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    margin: 0.15rem;
+    font-size: 1rem;
+    border-radius: 50%;
+    background-color: rgba($p-blue, 0.3);
+
+    &:hover {
+      background-color: rgba($white, 1);
+      transform: scale(1.1);
+      color: $p-blue;
+    }
+
+  }
+}
