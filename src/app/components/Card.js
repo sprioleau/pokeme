@@ -24,11 +24,7 @@ const Card = () => {
   return (
     <div className="card-positioner">
       <CardToolbar cardId={cardId} />
-      <ThreeDCard
-          style={{
-            backgroundColor: "red",
-          }}
-      >
+      <ThreeDCard>
         {cardContent && (
 
           <div className="card" style={{ backgroundImage: "url(../images/smoke.png)", backgroundColor: typeColors[cardContent.type] }}>

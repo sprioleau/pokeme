@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Error404 from "./components/Error404";
 import { selectModalContentExists } from "./store/selectors";
-import Banner from "./components/Banner";
+import Nav from "./components/Nav";
 import Modal from "./components/Modal";
 import Cards from "./components/Cards";
 import Card from "./components/Card";
@@ -31,7 +31,7 @@ const App = () => {
 					rtl={false}
 					draggable
 				/>
-				<Banner />
+				<Nav />
 				<Switch>
 					<Route exact path={["/", "/cards"]} component={Cards} />
 					<Route path="/cards/:cardId" component={Card} />
