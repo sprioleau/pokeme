@@ -24,57 +24,64 @@ const Card = () => {
   return (
     <div className="card-positioner">
       <CardToolbar cardId={cardId} />
-      <ThreeDCard>
-        {cardContent && (
-
-          <div className="card" style={{ backgroundImage: "url(../images/smoke.png)", backgroundColor: typeColors[cardContent.type] }}>
-            <div className="card__container">
-              <div className="card__wrapper">
-                <header className="card__header">
-                  <h3 className="card__name">{cardContent.name}</h3>
-                  <div className="card__header-right">
-                    <span className="card__hit-points">{cardContent.hitPoints}</span>
-                    <img className="card__type-badge icon" src={getImageSourceFromType(cardContent.type)} alt={cardContent.name} />
-                  </div>
-                </header>
-                <img className="card__image" src={cardContent.photoUrl} alt={cardContent.name} />
-                <div className="card__anatomy">
-                  <p className="card__anatomy-text">{`${cardContent.type} PokéMe`}</p>
-                  <p className="card__anatomy-text">{`Length: ${cardContent.height.ft}' ${cardContent.height.in}"`}</p>
-                  <p className="card__anatomy-text">{`Weight: ${cardContent.weight} lbs`}</p>
-                </div>
-                <ul className="card__attacks">{cardContent.attacks.map((attack) => (
-                  <li key={attack.name} className="card__attack">
-                    <div className="card__attack-energy-cost"><EnergyCostIcons cost={attack.energyCost} type={attack.type} /></div>
-                    <div className="card__attack-name-description"><span className="card__attack-name">{attack.name}</span> <span className="card__attack-description">{attack.description}</span></div>
-                    <div className="card__attack-damage">{attack.damage}</div>
-                  </li>
-                  ))}
-                </ul>
-                <ul className="card__utility-stats">
-                  <li className="card__utility-stat">
-                    <span className="card__utility-stat-text">weakness</span>
-                    <div className="card__icon type weakness">
-                      <img className="icon small" src={getImageSourceFromType(cardContent.weakness)} alt={cardContent.weakness} width="100%" height="auto" />
-                    </div>
-                  </li>
-                  <li className="card__utility-stat resistance">
-                    <span className="card__utility-stat-text">resistance</span>
-                    <div className="card__icon type" />
-                  </li>
-                  <li className="card__utility-stat">
-                    <span className="card__utility-stat-text">retreat cost</span>
-                    <div className="card__icon type"><RetreatCostIcons cost={cardContent.retreatCost} /></div>
-                  </li>
-                </ul>
-                <p className="card__description">{cardContent.description}</p>
-                <footer className="card__footer">
-                  <span className="card__footer-text">Created by <a href="https://github.com/sprioleau">San&apos;Quan Prioleau</a> for <a href="http://cs52.me/">CS52</a></span>
-                </footer>
-              </div>
-            </div>
+      <ThreeDCard
+        style={{
+          backgroundImage: "url(../images/smoke.png)",
+          backgroundColor: typeColors[cardContent.type],
+          width: "20rem",
+          minHeight: "calc(20rem * 2 / 3)",
+          backgroundBlendMode: "multiply",
+          border: "0.75rem solid #ffcb05",
+          borderRadius: "1rem",
+          padding: "1.5rem 1.5rem 0.75rem",
+          fontSize: "1.5rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <header className="card__header">
+          <h3 className="card__name">{cardContent.name}</h3>
+          <div className="card__header-right">
+            <span className="card__hit-points">{cardContent.hitPoints}</span>
+            <img className="card__type-badge icon" src={getImageSourceFromType(cardContent.type)} alt={cardContent.name} />
           </div>
-        )}
+        </header>
+        <img className="card__image" src={cardContent.photoUrl} alt={cardContent.name} />
+        <div className="card__anatomy">
+          <p className="card__anatomy-text">{`${cardContent.type} PokéMe`}</p>
+          <p className="card__anatomy-text">{`Length: ${cardContent.height.ft}' ${cardContent.height.in}"`}</p>
+          <p className="card__anatomy-text">{`Weight: ${cardContent.weight} lbs`}</p>
+        </div>
+        <ul className="card__attacks">{cardContent.attacks.map((attack) => (
+          <li key={attack.name} className="card__attack">
+            <div className="card__attack-energy-cost"><EnergyCostIcons cost={attack.energyCost} type={attack.type} /></div>
+            <div className="card__attack-name-description"><span className="card__attack-name">{attack.name}</span> <span className="card__attack-description">{attack.description}</span></div>
+            <div className="card__attack-damage">{attack.damage}</div>
+          </li>
+          ))}
+        </ul>
+        <ul className="card__utility-stats">
+          <li className="card__utility-stat">
+            <span className="card__utility-stat-text">weakness</span>
+            <div className="card__icon type weakness">
+              <img className="icon small" src={getImageSourceFromType(cardContent.weakness)} alt={cardContent.weakness} width="100%" height="auto" />
+            </div>
+          </li>
+          <li className="card__utility-stat resistance">
+            <span className="card__utility-stat-text">resistance</span>
+            <div className="card__icon type" />
+          </li>
+          <li className="card__utility-stat">
+            <span className="card__utility-stat-text">retreat cost</span>
+            <div className="card__icon type"><RetreatCostIcons cost={cardContent.retreatCost} /></div>
+          </li>
+        </ul>
+        <p className="card__description">{cardContent.description}</p>
+        <footer className="card__footer">
+          <span className="card__footer-text">Created by <a href="https://github.com/sprioleau">San&apos;Quan Prioleau</a> for <a href="http://cs52.me/">CS52</a></span>
+        </footer>
       </ThreeDCard>
       {cardContent && (
         <div className="message"><ReactMarkdown>{cardContent.message}</ReactMarkdown></div>

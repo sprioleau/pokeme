@@ -13,28 +13,6 @@
 }
 
 .card {
-  $font-size: 1rem;
-  $width: 20rem;
-  $card-font-size: 1rem;
-  width: $width;
-  min-height: calc(#{$width} * #{$aspect-ratio});
-  background-blend-mode: multiply;
-  border: 0.75rem solid $p-yellow;
-  border-radius: 1rem;
-  padding: 1.5rem 1.5rem 0.75rem;
-  font-size: 1.5rem;
-  
-  &__container {
-    overflow: hidden;
-  }
-
-  &__wrapper {
-    @include center;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-  }
-
   &__header {
     width: 100%;
     display: flex;
@@ -48,13 +26,13 @@
   }
 
   &__name {
-    font-size: calc(1.75 * #{$card-font-size});
+    font-size: calc(1.75 * 1rem);
     margin-bottom: 0;
     line-height: 1.2;
   }
 
   &__hit-points {
-    font-size: calc(1.5 * #{$card-font-size});
+    font-size: calc(1.5 * 1rem);
     @include ff-medium;
     color: $red;
     margin-right: 0.5rem;
@@ -121,7 +99,7 @@
     @include center;
     flex-wrap: wrap;
     flex: 0 0 3.75rem;
-    font-size: calc(2 * #{$card-font-size});
+    font-size: calc(2 * 1rem);
     margin-right: 0.5rem;
   }
 
@@ -141,7 +119,7 @@
 
   &__attack-damage {
     flex: 0 0 3rem;
-    font-size: calc(1.75 * #{$card-font-size});
+    font-size: calc(1.75 * 1rem);
   }
 
   &__utility-stats {
