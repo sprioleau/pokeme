@@ -10,13 +10,13 @@ const Filter = () => {
   const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
-  if (!cards) return null;
-
   const handleSetFilter = (type) => dispatch(setFilter(type));
   const handleClearFilter = () => dispatch(setFilter(""));
 
-  const cardTypes = cards.map((card) => JSON.parse(card?.title).type);
+  const cardTypes = cards.map(({ type }) => type);
   const uniqueTypes = [...new Set(cardTypes)];
+
+  if (cards?.length === 0 || uniqueTypes.length <= 1) return null;
 
   return (
     <div className="filter">

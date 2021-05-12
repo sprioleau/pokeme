@@ -30,7 +30,6 @@ import { selectCurrentCard } from "../store/selectors/index";
 
 const EditCardForm = () => {
   const currentCard = useSelector(selectCurrentCard);
-  const cardContent = JSON.parse(currentCard.title);
   const { id } = currentCard;
   const history = useHistory();
 
@@ -40,19 +39,19 @@ const EditCardForm = () => {
 
   const dispatch = useDispatch();
 
-  const secondMove = cardContent.attacks[1] ? cardContent.attacks[1] : {};
+  const secondMove = currentCard.attacks[1] ? currentCard.attacks[1] : {};
 
-  const [name, setName] = useState(cardContent.name);
-  const [photoUrl, setPhotoUrl] = useState(cardContent.photoUrl);
-  const [type, setType] = useState(cardContent.type);
-  const [weakness, setWeakness] = useState(cardContent.weakness);
-  const [feet, setFeet] = useState(`${cardContent.height.ft} ft.`);
-  const [inches, setInches] = useState(`${cardContent.height.ft} in.`);
-  const [weight, setWeight] = useState(`${cardContent.height.ft} lbs.`);
-  const [move1, setMove1] = useState(cardContent.attacks[0]);
+  const [name, setName] = useState(currentCard.name);
+  const [photoUrl, setPhotoUrl] = useState(currentCard.photoUrl);
+  const [type, setType] = useState(currentCard.type);
+  const [weakness, setWeakness] = useState(currentCard.weakness);
+  const [feet, setFeet] = useState(`${currentCard.height.ft} ft.`);
+  const [inches, setInches] = useState(`${currentCard.height.ft} in.`);
+  const [weight, setWeight] = useState(`${currentCard.height.ft} lbs.`);
+  const [move1, setMove1] = useState(currentCard.attacks[0]);
   const [move2, setMove2] = useState(secondMove);
-  const [hitPoints, setHitPoints] = useState(cardContent.hitPoints);
-  const [message, setMessage] = useState(cardContent.message);
+  const [hitPoints, setHitPoints] = useState(currentCard.hitPoints);
+  const [message, setMessage] = useState(currentCard.message);
 
   const [nameHasBlurred, setNameHasBlurred] = useState(false);
   const [photoUrlHasBlurred, setPhotoUrlHasBlurred] = useState(false);

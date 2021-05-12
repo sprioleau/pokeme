@@ -4,14 +4,13 @@ import { getName, getRandomFromArray, getAttacks, getHitPoints } from "./functio
 import pokemonTypes from "../data/pokemon-types";
 import moves from "../data/pokemon-moves";
 
-const ROOT_URL = "https://platform.cs52.me/api";
-const API_KEY = "s_prioleau";
-const API_ROUTE = "posts";
+const ROOT_URL = process.env.REACT_APP_ROOT_URL || "http://localhost:9090/api";
+const API_ROUTE = "cards";
 
 // eslint-disable-next-line
 export const fetchCardsFromApi = async (callback) => {
 	try {
-		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`);
+		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}`);
 		return callback(data);
 	} catch (error) {
 		toast("🔴 Uh oh! We got an error when trying to load your cards.");
@@ -21,16 +20,12 @@ export const fetchCardsFromApi = async (callback) => {
 
 // Create
 export const createCardFromApi = async (card, callback) => {
-	const cardObject = {
-		title: JSON.stringify(card),
-	};
-
 	try {
-		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}?key=${API_KEY}`, cardObject);
+		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}`, card);
 		if (callback) return callback(data);
 		return null;
 	} catch (error) {
-				toast("🔴 Uh oh! There was an error when trying to crate your card.");
+		toast("🔴 Uh oh! There was an error when trying to crate your card.");
 		return console.error(error);
 	}
 };
@@ -38,7 +33,7 @@ export const createCardFromApi = async (card, callback) => {
 // Read
 export const fetchCardFromApi = async (id, callback) => {
 	try {
-		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
+		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}/${id}`);
 		if (callback) return callback(data);
 		return null;
 	} catch (error) {
@@ -51,7 +46,7 @@ export const fetchCardFromApi = async (id, callback) => {
 export const updateCardFromApi = async (id, updatedFields, callback) => {
 	try {
 		const updatedItemForDatabase = { title: JSON.stringify(updatedFields) };
-		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`, updatedItemForDatabase);
+		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}`, updatedItemForDatabase);
 		return callback(data);
 	} catch (error) {
 		toast("🔴 Uh oh! There was an error when trying to update your card.");
@@ -62,7 +57,7 @@ export const updateCardFromApi = async (id, updatedFields, callback) => {
 // Delete
 export const deleteCardFromApi = async (id, callback) => {
 	try {
-		const { data } = await axios.delete(`${ROOT_URL}/${API_ROUTE}/${id}?key=${API_KEY}`);
+		const { data } = await axios.delete(`${ROOT_URL}/${API_ROUTE}/${id}`);
 		if (callback) return callback(data);
 		return null;
 	} catch (error) {

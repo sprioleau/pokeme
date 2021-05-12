@@ -13,13 +13,24 @@ export const setFilter = (type) => ({
 	filter: type
 });
 
+export const setIsLoading = (isLoading) => ({
+	type: types.SET_IS_LOADING,
+	isLoading
+});
+
 // --- Thunks --- //
 export const fetchCards = () => {
 	return (dispatch) => {
-		api.fetchCardsFromApi((cards) => dispatch({
-			type: types.FETCH_CARDS,
-			cards,
-		}));
+		dispatch(setIsLoading(true));
+
+		api.fetchCardsFromApi((cards) => {
+			dispatch({
+				type: types.FETCH_CARDS,
+				cards,
+			});
+		});
+
+		dispatch(setIsLoading(false));
 	};
 };
 
@@ -33,7 +44,7 @@ export const createCard = (fields, history) => {
 
 		history.push({
 			pathname: "/refresh",
-			state: { id: newCard.id }
+			state: { id: newCard._id }
 		});
 	});
 };
@@ -61,7 +72,7 @@ export const updateCard = (id, fields, history) => {
 		// Reference: https://stackoverflow.com/questions/44121069/how-to-pass-params-with-history-push-link-redirect-in-react-router-v4
 		history.push({
 			pathname: "/refresh",
-			state: { id }
+			state: { id: updatedCard._id }
 		});
 	});
 };
@@ -69,13 +80,15 @@ export const updateCard = (id, fields, history) => {
 // Delete
 export const deleteCard = (id, history) => {
 	return (dispatch) => api.deleteCardFromApi(id, (data) => {
+		console.log("data:", data);
+
 		dispatch({
 			type: types.DELETE_CARD,
 			message: data.message,
 			id
 		});
 
-		if (!data.message.includes("success")) return null;
+		if (!data.message.toLowerCase().includes("success")) return null;
 		return history.push("/cards");
 	});
 };
@@ -83,7 +96,7 @@ export const deleteCard = (id, history) => {
 export const deleteAllCards = (arrayOfIds, history) => {
 	return (dispatch) => {
 		arrayOfIds.forEach((id) => api.deleteCardFromApi(id, ({ message }) => {
-			if (message.includes("success")) toast(`Deleted card with ID: ${id}`);
+			if (message.toLowerCase().includes("success")) toast(`Deleted card with ID: ${id}`);
 		}));
 
 		dispatch({

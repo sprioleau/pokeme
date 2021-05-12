@@ -32,14 +32,18 @@
   }
 
   &__hit-points {
-    font-size: calc(1.5 * 1rem);
+    font-size: 2rem;
     @include ff-medium;
     color: $red;
     margin-right: 0.5rem;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: $white;
+    line-height: 1;
   }
 
   &__type-badge {
     width: 2.5rem;
+    padding: 0;
   }
   
   &__image {
@@ -125,6 +129,7 @@
   &__utility-stats {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
     width: 100%;
     font-size: 0.9rem;
     margin-bottom: 1rem;
@@ -155,6 +160,7 @@
 
   .resistance {
     flex: 1 0;
+    margin: 0 0.5;
     text-align: center;
   }
 

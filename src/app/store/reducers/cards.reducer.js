@@ -3,9 +3,9 @@ import types from "../types";
 const initialState = {
 	cards: [],
 	currentCard: {},
-	message: "",
 	modalContent: {},
-	filter: ""
+	filter: "",
+	isLoading: false,
 };
 
 const CardsReducer = (state = initialState, action) => {
@@ -49,8 +49,7 @@ const CardsReducer = (state = initialState, action) => {
 		case types.DELETE_CARD: {
 			return {
 				...state,
-				cards: [...state.cards.filter((card) => card.id === action.id)],
-				message: action.message
+				cards: [...state.cards.filter((card) => card._id === action.id)],
 			};
 		}
 
@@ -72,6 +71,13 @@ const CardsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				filter: action.filter
+			};
+		}
+
+		case types.SET_IS_LOADING: {
+			return {
+				...state,
+				loading: action.isLoading
 			};
 		}
 
