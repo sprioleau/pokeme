@@ -3,6 +3,39 @@
   flex-direction: column;
 }
 
+.parallax {
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: $corner-radius-lg;
+}
+
+.glare-wrapper {
+  border-radius: $corner-radius-lg !important;
+}
+
+.parallax:hover {
+  @include setCardChildOffset("header", 10);
+  @include setCardChildOffset("name", 30);
+  @include setCardChildOffset("hit-points", 20);
+  @include setCardChildOffset("type-badge", 30);
+  @include setCardChildOffset("image", 25);
+  @include setCardChildOffset("image-wrapper", 25);
+  @include setCardChildOffset("anatomy", 40);
+  @include setCardChildOffset("attack", 30);
+  @include setCardChildOffset("attack-energy-cost", 20, 1.2);
+  @include setCardChildOffset("attack-name-description", 40);
+  @include setCardChildOffset("attack-damage", 20);
+  @include setCardChildOffset("attack:nth-child(2)", 40);
+  @include setCardChildOffset("icon", 50, 1.2);
+  @include setCardChildOffset("utility-stats", 30);
+  @include setCardChildOffset("description", 40);
+  @include setCardChildOffset("footer", 20);
+
+  .card__image-wrapper::after {
+    opacity: 0.5;
+  }
+}
+
 .divider {
   display: block;
   flex: 0 0 2px;
@@ -13,12 +46,28 @@
 }
 
 .card {
+  @include center;
+  flex-direction: column;
+  background-image: url(../images/smoke.png);
+  width: 20rem;
+  min-height: calc(20rem * 2 / 3);
+  background-blend-mode: multiply;
+  border: 0.75rem solid #ffcb05;
+  border-radius: $corner-radius-lg;
+  padding: 1rem 1.5rem 0.75rem;
+  font-size: 1.5rem;
+
+  & > * {
+    @include transition(transform, 0.4s);
+  }
+
   &__header {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 0.5rem;
+    transform-style: preserve-3d;
   }
 
   &__header-right {
@@ -56,6 +105,28 @@
     border: $border-width solid $p-yellow;
     margin-bottom: 0.5rem;
     position: relative;
+    z-index: 2;
+  }
+  
+  &__image-wrapper {
+    position: relative;
+    width: 100%;
+    transform-style: preserve-3d;
+
+    &::after {
+    @include transition;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $black;
+    filter: blur(30px);
+    backdrop-filter: multiply;
+    opacity: 0;
+    z-index: 1;
+  }
   }
 
   &__anatomy {
@@ -86,9 +157,11 @@
     justify-content: space-around;
     flex: 1;
     min-height: 160px;
+    margin-bottom: 0.25rem;
   }
 
   &__attack {
+    transform-style: preserve-3d;
     display: flex;
     align-items: center;
     line-height: 0.7;
@@ -100,6 +173,7 @@
   }
 
   &__attack-energy-cost {
+    @include transition;
     @include center;
     flex-wrap: wrap;
     flex: 0 0 3.75rem;
@@ -113,6 +187,8 @@
   }
 
   &__attack-name-description {
+    @include transition;
+    transform-style: preserve-3d;
     margin-right: 0.5rem;
   }
 
@@ -122,6 +198,7 @@
   }
 
   &__attack-damage {
+    @include transition;
     flex: 0 0 3rem;
     font-size: calc(1.75 * 1rem);
   }
@@ -142,6 +219,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transform-style: preserve-3d;
 
     &:not(:last-child) {
       margin-right: 0.5rem;
