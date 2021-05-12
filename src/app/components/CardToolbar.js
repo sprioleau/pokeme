@@ -8,7 +8,6 @@ import EditCard from "./EditCard";
 import * as actions from "../store/actions";
 
 const CardToolbar = ({ cardId }) => {
-  console.log("cardId:", cardId);
   const history = useHistory();
   const dispatch = useDispatch();
 

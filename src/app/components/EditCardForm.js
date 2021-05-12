@@ -30,7 +30,7 @@ import { selectCurrentCard } from "../store/selectors/index";
 
 const EditCardForm = () => {
   const currentCard = useSelector(selectCurrentCard);
-  const { id } = currentCard;
+  const id = currentCard._id;
   const history = useHistory();
 
   const formatFeet = (value) => `${value.toString()} ft.`;

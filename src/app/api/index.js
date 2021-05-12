@@ -45,8 +45,7 @@ export const fetchCardFromApi = async (id, callback) => {
 // Update
 export const updateCardFromApi = async (id, updatedFields, callback) => {
 	try {
-		const updatedItemForDatabase = { title: JSON.stringify(updatedFields) };
-		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}`, updatedItemForDatabase);
+		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}`, updatedFields);
 		return callback(data);
 	} catch (error) {
 		toast("🔴 Uh oh! There was an error when trying to update your card.");

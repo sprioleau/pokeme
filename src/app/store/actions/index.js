@@ -80,8 +80,6 @@ export const updateCard = (id, fields, history) => {
 // Delete
 export const deleteCard = (id, history) => {
 	return (dispatch) => api.deleteCardFromApi(id, (data) => {
-		console.log("data:", data);
-
 		dispatch({
 			type: types.DELETE_CARD,
 			message: data.message,
