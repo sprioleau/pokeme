@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  // ChakraProvider,
   Box,
   VStack,
   HStack,
@@ -18,15 +17,17 @@ import {
   SliderFilledTrack,
   SliderThumb,
   Button,
-  Textarea
+  Textarea,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import moves from "../data/pokemon-moves";
 import pokemonTypes from "../data/pokemon-types";
 import { getRandomFromArray } from "../api/functions/api.functions";
 import { createCard, toggleModalVisibility } from "../store/actions/index";
+import Pong from "./Pong";
 
 const NewCardForm = () => {
   const formatFeet = (value) => `${value.toString()} ft.`;
@@ -47,6 +48,8 @@ const NewCardForm = () => {
   const [move2, setMove2] = useState({});
   const [hitPoints, setHitPoints] = useState(100);
   const [message, setMessage] = useState("");
+  const [isSpecial, setIsSpecial] = useState(false);
+  const [showSpecial, setShowSpecial] = useState(true);
 
   const [nameHasBlurred, setNameHasBlurred] = useState(false);
   const [photoUrlHasBlurred, setPhotoUrlHasBlurred] = useState(false);
@@ -73,6 +76,12 @@ const NewCardForm = () => {
   const handleNameBlur = () => setNameHasBlurred(true);
   const handlePhotoUrlFocus = () => setPhotoUrlHasBlurred(false);
   const handlePhotoUrlBlur = () => setPhotoUrlHasBlurred(true);
+  const toggleIsSpecial = () => {
+    const toastDuration = 3000;
+    setIsSpecial(true);
+    toast("Pika! Glass material applied.", { autoClose: toastDuration });
+    setTimeout(() => setShowSpecial(false), toastDuration);
+  };
 
   const isReadyToSubmit = name && photoUrl && type && weakness && feet && inches && weight && move1 && hitPoints;
 
@@ -96,112 +105,116 @@ const NewCardForm = () => {
 			weakness,
 			retreatCost: getRandomFromArray([1, 2, 3]),
       description: "A lovely PokéMe with an exceptional personality.",
-      message
+      message,
+      isSpecial
     };
     dispatch(createCard(newCard, history));
 	};
 
   return (
-    <Box
-      backgroundColor="#fff"
-      borderWidth="1px"
-      rounded="lg"
-      shadow="1px 1px 3px rgba(0,0,0,0.3)"
-      maxWidth={650}
-      p={6}
-      m="10px auto"
-      as="form"
-      onSubmit={handleSubmit}
-    >
-      <VStack spacing={4}>
-        <FormControl isRequired id="name" onFocus={handleNameFocus} onBlur={handleNameBlur} isInvalid={nameHasBlurred && !isValidName(name)}>
-          <FormLabel>Name</FormLabel>
-          <Input variant="outline" placeholder="Pikachu" value={name} onChange={handleNameChange} />
-        </FormControl>
-        <FormControl isRequired id="photo-url" onFocus={handlePhotoUrlFocus} onBlur={handlePhotoUrlBlur} isInvalid={photoUrlHasBlurred && !isValidUrl}>
-          <FormLabel>Image URL</FormLabel>
-          <Input variant="outline" placeholder="https://www.example.com/images/photo-of-me.png" value={photoUrl} onChange={handlePhotoUrlChange} />
-        </FormControl>
-        <HStack width="100%">
-          <FormControl isRequired id="type">
-            <FormLabel>Type</FormLabel>
-            <Select value={type} onChange={handleSetType}>
-            { pokemonTypes.map((pokemonType) => <option key={pokemonType}>{pokemonType}</option>) }
-            </Select>
+    <>
+      <Pong isSelected={isSpecial} onClick={toggleIsSpecial} show={showSpecial} src="../images/pikachu.png" alt="Pikachu" />
+      <Box
+        backgroundColor="#fff"
+        borderWidth="1px"
+        rounded="lg"
+        shadow="1px 1px 3px rgba(0,0,0,0.3)"
+        maxWidth={650}
+        p={6}
+        m="10px auto"
+        as="form"
+        onSubmit={handleSubmit}
+      >
+        <VStack spacing={4}>
+          <FormControl isRequired id="name" onFocus={handleNameFocus} onBlur={handleNameBlur} isInvalid={nameHasBlurred && !isValidName(name)}>
+            <FormLabel>Name</FormLabel>
+            <Input variant="outline" placeholder="Pikachu" value={name} onChange={handleNameChange} />
           </FormControl>
-          <FormControl isRequired id="weakness">
-            <FormLabel>Weakness</FormLabel>
-            <Select value={weakness} onChange={handleSetWeakness}>
-            { pokemonTypes.filter((pokemonType) => pokemonType !== type).map((pokemonType) => <option key={pokemonType}>{pokemonType}</option>) }
-            </Select>
+          <FormControl isRequired id="photo-url" onFocus={handlePhotoUrlFocus} onBlur={handlePhotoUrlBlur} isInvalid={photoUrlHasBlurred && !isValidUrl}>
+            <FormLabel>Image URL</FormLabel>
+            <Input variant="outline" placeholder="https://www.example.com/images/photo-of-me.png" value={photoUrl} onChange={handlePhotoUrlChange} />
           </FormControl>
-        </HStack>
-        <HStack width="100%">
-          <FormControl isRequired id="length">
-            <FormLabel>Length</FormLabel>
-            <HStack>
-              <NumberInput maxW={20} step={1} defaultValue={5} value={feet} min={2} max={8} pattern="[0-9]\sft." onChange={(value) => handleFeetChange(value)}>
+          <HStack width="100%">
+            <FormControl isRequired id="type">
+              <FormLabel>Type</FormLabel>
+              <Select value={type} onChange={handleSetType}>
+              { pokemonTypes.map((pokemonType) => <option key={pokemonType}>{pokemonType}</option>) }
+              </Select>
+            </FormControl>
+            <FormControl isRequired id="weakness">
+              <FormLabel>Weakness</FormLabel>
+              <Select value={weakness} onChange={handleSetWeakness}>
+              { pokemonTypes.filter((pokemonType) => pokemonType !== type).map((pokemonType) => <option key={pokemonType}>{pokemonType}</option>) }
+              </Select>
+            </FormControl>
+          </HStack>
+          <HStack width="100%">
+            <FormControl isRequired id="length">
+              <FormLabel>Length</FormLabel>
+              <HStack>
+                <NumberInput maxW={20} step={1} defaultValue={5} value={feet} min={2} max={8} pattern="[0-9]\sft." onChange={(value) => handleFeetChange(value)}>
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+                <NumberInput maxW={20} step={1} defaultValue={6} value={inches} min={0} max={11} pattern="[0-9]\sin." onChange={(value) => handleInchesChange(value)}>
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </HStack>
+            </FormControl>
+            <FormControl isRequired id="weight">
+              <FormLabel>Weight</FormLabel>
+              <NumberInput width={28} step={10} defaultValue={100} value={weight} min={2} max={1000} pattern="[0-9]*(.[0-9]+)?\slbs." onChange={(value) => handleWeightChange(value)}>
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
-              <NumberInput maxW={20} step={1} defaultValue={6} value={inches} min={0} max={11} pattern="[0-9]\sin." onChange={(value) => handleInchesChange(value)}>
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </HStack>
+            </FormControl>
+          </HStack>
+          <HStack width="100%">
+            <FormControl isRequired id="move-1">
+              <FormLabel>First Move</FormLabel>
+              <Select value={move1.name} onChange={handleSetMove1}>
+              { moves.filter((move) => move.name !== move2.name).map((move) => <option key={move.name}>{move.name}</option>) }
+              </Select>
+            </FormControl>
+            <FormControl id="move-2">
+              <FormLabel>Second Move</FormLabel>
+              <Select placeholder="Select a second move" value={move2?.name} onChange={handleSetMove2}>
+              { moves.filter((move) => move.name !== move1.name).map((move) => <option key={move.name}>{move.name}</option>) }
+              </Select>
+            </FormControl>
+          </HStack>
+          <FormControl isRequired id="hit-points">
+            <FormLabel>Hit Points</FormLabel>
+            <Slider flex="1" max={200} min={50} defaultValue={100} step={10} focusThumbOnChange={false} value={hitPoints} onChange={(value) => handleHitPointsChange(value)}>
+              <SliderTrack bg="red.100">
+                <SliderFilledTrack bg="tomato" />
+              </SliderTrack>
+              <SliderThumb fontSize="sm" boxSize="32px">
+                {hitPoints}
+              </SliderThumb>
+            </Slider>
           </FormControl>
-          <FormControl isRequired id="weight">
-            <FormLabel>Weight</FormLabel>
-            <NumberInput width={28} step={10} defaultValue={100} value={weight} min={2} max={1000} pattern="[0-9]*(.[0-9]+)?\slbs." onChange={(value) => handleWeightChange(value)}>
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
+          <FormControl id="message">
+            <FormLabel>Message</FormLabel>
+            <Textarea value={message} placeholder="Enter additional deets (supports Markdown)..." onChange={handleMessageChange} />
           </FormControl>
-        </HStack>
-        <HStack width="100%">
-          <FormControl isRequired id="move-1">
-            <FormLabel>First Move</FormLabel>
-            <Select value={move1.name} onChange={handleSetMove1}>
-            { moves.filter((move) => move.name !== move2.name).map((move) => <option key={move.name}>{move.name}</option>) }
-            </Select>
-          </FormControl>
-          <FormControl id="move-2">
-            <FormLabel>Second Move</FormLabel>
-            <Select placeholder="Select a second move" value={move2?.name} onChange={handleSetMove2}>
-            { moves.filter((move) => move.name !== move1.name).map((move) => <option key={move.name}>{move.name}</option>) }
-            </Select>
-          </FormControl>
-        </HStack>
-        <FormControl isRequired id="hit-points">
-          <FormLabel>Hit Points</FormLabel>
-          <Slider flex="1" max={200} min={50} defaultValue={100} step={10} focusThumbOnChange={false} value={hitPoints} onChange={(value) => handleHitPointsChange(value)}>
-            <SliderTrack bg="red.100">
-              <SliderFilledTrack bg="tomato" />
-            </SliderTrack>
-            <SliderThumb fontSize="sm" boxSize="32px">
-              {hitPoints}
-            </SliderThumb>
-          </Slider>
-        </FormControl>
-        <FormControl id="message">
-          <FormLabel>Message</FormLabel>
-          <Textarea value={message} placeholder="Enter additional deets (supports Markdown)..." onChange={handleMessageChange} />
-        </FormControl>
-        <HStack width="100%">
-          <Button disabled={!isReadyToSubmit} type="submit" colorScheme="blue" width="100%">Make my PokéMe</Button>
-          <Button type="button" colorScheme="blue" variant="outline" width="100%" onClick={handleCloseModal}>Close</Button>
-        </HStack>
-      </VStack>
-    </Box>
+          <HStack width="100%">
+            <Button disabled={!isReadyToSubmit} type="submit" colorScheme="blue" width="100%">Make my PokéMe</Button>
+            <Button type="button" colorScheme="blue" variant="outline" width="100%" onClick={handleCloseModal}>Close</Button>
+          </HStack>
+        </VStack>
+      </Box>
+    </>
   );
 };
 

@@ -5,7 +5,9 @@
   height: 100vh;
   left: 0;
   top: 0;
-  background: rgba($black, 0.8);
+  background: rgba($p-blue-dark, 0.8);
+  backdrop-filter: blur(1px);
+  background-blend-mode: multiply;
   z-index: 15;
   overflow: scroll;
   display: flex;
@@ -20,6 +22,7 @@
     .modal-content-wrapper {
       margin: 0 0 5rem;
       width: 650px;
+      position: relative;
     }
   }
 }

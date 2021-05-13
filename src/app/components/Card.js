@@ -13,8 +13,6 @@ const Card = () => {
   const dispatch = useDispatch();
   const { cardId } = useParams();
 
-  const isSpecial = false;
-
 	useEffect(() => {
     dispatch(actions.fetchCard(cardId, (data) => setCard(data)));
 	}, []);
@@ -34,8 +32,8 @@ const Card = () => {
         scale={1.02}
       >
         <div
-          className={`card${isSpecial ? " special" : ""}`}
-          style={{ backgroundColor: !isSpecial ? typeColors[card.type] : null }}
+          className={`card${card.isSpecial ? " special" : ""}`}
+          style={{ backgroundColor: !card.isSpecial ? typeColors[card.type] : null }}
         >
           <header className="card__header">
             <h3 className="card__name">{card.name}</h3>

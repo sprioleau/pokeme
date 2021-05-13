@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./styles/style.scss";
-import { useSelector } from "react-redux";
-
 import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
+import "react-toastify/dist/ReactToastify.min.css";
+
 import Error404 from "./components/Error404";
 import { selectModalContentExists } from "./store/selectors";
 import Nav from "./components/Nav";
 import Modal from "./components/Modal";
 import Cards from "./components/Cards";
 import Card from "./components/Card";
-import "react-toastify/dist/ReactToastify.min.css";
 import RefreshCard from "./components/RefreshCard";
 
 const App = () => {

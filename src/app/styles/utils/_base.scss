@@ -2,6 +2,7 @@ body {
 	@include ui-background;
 	@include ff;
 	padding: $body-padding;
+	margin: 0;
 	color: $white;
 }
 
