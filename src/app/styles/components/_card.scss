@@ -45,8 +45,6 @@ $image-border-width: 0.25rem;
 .card {
   @include center;
   flex-direction: column;
-  background-image: url(../images/smoke.png);
-  background-blend-mode: multiply;
   width: 20rem;
   min-height: calc(20rem * 2 / 3);
   border: 0.75rem solid #ffcb05;

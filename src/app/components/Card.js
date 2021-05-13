@@ -1,28 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import Tilt from "react-parallax-tilt";
+import { exportComponentAsPNG } from "react-component-export-image";
 
-import typeColors from "../data/pokemon-type-colors";
+// import typeColors from "../data/pokemon-type-colors";
 import * as actions from "../store/actions";
 import CardToolbar from "./CardToolbar";
 
 const Card = () => {
-  const [card, setCard] = useState(null);
+  const [card, setCard] = useState();
   const dispatch = useDispatch();
   const { cardId } = useParams();
+  const ref = useRef(null);
 
-	useEffect(() => {
+  useEffect(() => {
     dispatch(actions.fetchCard(cardId, (data) => setCard(data)));
 	}, []);
 
   if (!card) return null;
 
   const getImageSourceFromType = (type) => `../images/pokeme-types/${card.type ? `${type.toLowerCase()}.svg` : "bug.svg"}`;
+  const getBgImageSourceFromType = (type) => `url(../images/pokeme-types/${card.type ? `${type.toLowerCase()}-bg.png)` : "url(../images/pokeme-types/bug-bg.png"}`;
 
   return (
     <div className="card-positioner">
+      <button type="button" onClick={() => exportComponentAsPNG(ref)}>
+        Export As PNG
+      </button>
       <CardToolbar cardId={cardId} />
       <Tilt
         className="parallax"
@@ -32,8 +38,9 @@ const Card = () => {
         scale={1.02}
       >
         <div
+          ref={ref}
           className={`card${card.isSpecial ? " special" : ""}`}
-          style={{ backgroundColor: !card.isSpecial ? typeColors[card.type] : null }}
+          style={{ backgroundImage: !card.isSpecial ? getBgImageSourceFromType(card.type) : "none", }}
         >
           <header className="card__header">
             <h3 className="card__name">{card.name}</h3>
