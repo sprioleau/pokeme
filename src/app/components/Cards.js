@@ -28,13 +28,13 @@ const Cards = () => {
       <ul className="cards__list">
         {cards.length > 0 && displayedCards.map((card) => {
           return (
-            <li key={card._id} className="cards__list-item">
-              <NavLink to={`/cards/${card._id}`}>
-                <div key={card._id} className="cards__card" style={{ backgroundImage: "url(../images/card-bg.png)" }}>
+            <li key={card.id} className="cards__list-item">
+              <NavLink to={`/cards/${card.id}`}>
+                <div key={card.id} className="cards__card" style={{ backgroundImage: "url(../images/card-bg.png)" }}>
                   <div className="cards__card-wrapper" />
                 </div>
                 <img className="cards__card-type-badge" src={`../images/pokeme-types/${card.type ? `${card.type.toLowerCase()}.svg` : "bug.svg"}`} alt={card.name} />
-                <h4 className="cards__card-name" to={`/cards/${card._id}`}>{card.name}</h4>
+                <h4 className="cards__card-name" to={`/cards/${card.id}`}>{card.name}</h4>
               </NavLink>
             </li>
           );

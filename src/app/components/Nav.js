@@ -20,7 +20,7 @@ function Nav() {
   const cards = useSelector(selectCards);
 
   const handleRemoveAllCards = () => {
-    const ids = cards.map(({ _id }) => _id);
+    const ids = cards.map(({ id }) => id);
     dispatch(deleteAllCards(ids, history));
   };
   const handleGenerateCards = () => dispatch(generateCards(GENERATED_CARDS, history));

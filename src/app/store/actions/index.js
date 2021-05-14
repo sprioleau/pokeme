@@ -44,7 +44,7 @@ export const createCard = (fields, history) => {
 
 		history.push({
 			pathname: "/refresh",
-			state: { id: newCard._id }
+			state: { id: newCard.id }
 		});
 	});
 };
@@ -72,7 +72,7 @@ export const updateCard = (id, fields, history) => {
 		// Reference: https://stackoverflow.com/questions/44121069/how-to-pass-params-with-history-push-link-redirect-in-react-router-v4
 		history.push({
 			pathname: "/refresh",
-			state: { id: updatedCard._id }
+			state: { id: updatedCard.id }
 		});
 	});
 };
