@@ -53,6 +53,10 @@ $image-border-width: 0.25rem;
   padding: 1rem 1.5rem 0.75rem;
   font-size: 1.5rem;
 
+  &.card-wrapper {
+    border: none;
+  }
+
   &.special {
     background-image: unset;
     background: rgba($white, 0.05);
@@ -100,6 +104,17 @@ $image-border-width: 0.25rem;
 
   & > * {
     @include transition(transform, 0.4s);
+  }
+
+  &__back {
+    background-size: cover;
+    background-position: center;
+    transform: rotateY(180deg);
+    z-index: 20;
+    width: 20rem;
+    height: calc(5 / 3 * 20rem);
+    border: 0.75rem solid #ffcb05;
+    border-radius: $corner-radius-lg;
   }
 
   &__header {
