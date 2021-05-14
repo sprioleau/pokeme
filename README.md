@@ -76,6 +76,9 @@ Generate
 3D Card  
 ![3D Card](https://pokeme-cards.netlify.app/images/screenshots/3d_card.gif)
 
+Flip Card  
+![Flip Card](https://pokeme-cards.netlify.app/images/screenshots/flip.gif)
+
 Glass Card  
 ![Glass Card](https://pokeme-cards.netlify.app/images/screenshots/glass.gif)
 
