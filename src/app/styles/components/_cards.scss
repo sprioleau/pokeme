@@ -2,8 +2,9 @@
   margin: 0 auto;
 
   &__list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 1rem;
   }
 
   &__list-item {

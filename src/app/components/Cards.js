@@ -39,7 +39,6 @@ const Cards = () => {
             </li>
           );
         })}
-        <BlankCard quantity={8} />
       </ul>
     </div>
     </>
@@ -47,6 +46,3 @@ const Cards = () => {
 };
 
 export default Cards;
-
-const BlankCard = ({ quantity }) => Array.from(Array(quantity),
-  (_, index) => (<li key={`blank-${index}`} className="cards__list-item collapse" />));
