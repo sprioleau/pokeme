@@ -18,12 +18,14 @@ Deployed URL: [pokeme-cards.netlify.app](https://pokeme-cards.netlify.app/)
 - Stitched together existing Pokémon logo with Pokéme name
 - Created card background texture
 - Implemented SVG background making use of [svgbackgrounds.com](https://www.svgbackgrounds.com/)
+- Added Easter egg for card style
 
 ## What Didn't
 
 - Would have liked to refactor the card styling so that it scales well with the browser window size
 - Did not add many styles for responsiveness
 - With more time, I would have added a filter by type feature on the main cards page
+- Would have liked to add download screenshot functionality, so users can "keep" their cards
 
 ### Refreshing the view once data was created or updated
 It took several iterations to be able to get a specific card to render once it was either created or updated. I was able to write a small component (`RefreshCard`) for refreshing the UI once card creation or updates were made. This struck me as not the best solution to the problem.
