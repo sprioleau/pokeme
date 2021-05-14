@@ -90,8 +90,8 @@ const Card = () => {
 
 export default Card;
 
+const EnergyCostIcons = ({ cost, type }) => Array.from(Array(cost),
+  (_, index) => (<img key={index} className="icon small" src={`../images/pokeme-types/${type.toLowerCase()}.svg`} alt={`${type} symbol`} />));
+
 const RetreatCostIcons = ({ cost }) => (cost === 0 ? "0" : Array.from(Array(cost),
   (_, index) => (<img key={index} className="icon small" src="../images/pokeme-types/retreat.svg" alt="retreat symbol" />)));
-
-const EnergyCostIcons = ({ cost, type }) => Array.from(Array(cost),
-  (_, index) => (<img key={index} className="icon small" src={`../images/pokeme-types/${type.toLowerCase()}.svg`} alt="retreat symbol" />));
