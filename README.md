@@ -8,6 +8,7 @@ Deployed URL: [pokeme-cards.netlify.app](https://pokeme-cards.netlify.app/)
 
 ## What Worked Well
 
+### Before Lab 5 work
 - Styling with Sass preprocessor
 - Used functional components with hooks
 - Abstracted API logic into separate file
@@ -18,7 +19,12 @@ Deployed URL: [pokeme-cards.netlify.app](https://pokeme-cards.netlify.app/)
 - Stitched together existing Pokémon logo with Pokéme name
 - Created card background texture
 - Implemented SVG background making use of [svgbackgrounds.com](https://www.svgbackgrounds.com/)
-- Added Easter egg for card style
+
+### With Lab 5 work
+- Integrated with Platform API (Lab 5)
+- Added filter for filtering by PokéMe type
+- Improved 3D card look (required swapping out library) by making use of Sass mixins and the `transform: translateZ()` declaration
+- 🥚 Added Easter egg for glass card style
 
 ## What Didn't
 
@@ -66,3 +72,12 @@ Delete All
 
 Generate  
 ![Generate](https://pokeme-cards.netlify.app/images/screenshots/generate.gif)
+
+3D Card  
+![3D Card](https://pokeme-cards.netlify.app/images/screenshots/3d_card.gif)
+
+Glass Card  
+![Glass Card](https://pokeme-cards.netlify.app/images/screenshots/glass.gif)
+
+Filter by Type 
+![Filter by Type](https://pokeme-cards.netlify.app/images/screenshots/filter.gif)
