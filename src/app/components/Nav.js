@@ -27,7 +27,15 @@ const Nav = () => {
     dispatch(deleteAllCards(ids, history));
   };
 
-  const handleGenerateCards = () => dispatch(generateCards(GENERATED_CARDS_QUANTITY, history));
+  const handleGenerateCards = () => {
+    if (!isAuthenticated) {
+      toast("Sorry. You need to be signed in to generate a card.", { autoClose: 3000, position: "top-center" });
+      return history.push("/signin");
+    }
+
+    return dispatch(generateCards(GENERATED_CARDS_QUANTITY, history));
+  };
+
   const handleCreateNewCard = () => {
     if (!isAuthenticated) {
       toast("Sorry. You need to be signed in to create a card.", { autoClose: 3000, position: "top-center" });

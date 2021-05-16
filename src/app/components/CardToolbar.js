@@ -14,7 +14,15 @@ const CardToolbar = ({ cardId }) => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
-  const handleDeleteCard = () => dispatch(actions.deleteCard(cardId, history));
+  const handleDeleteCard = () => {
+    if (!isAuthenticated) {
+      toast("Sorry. You must be signed in to do edit a card.", { autoClose: 3000, position: "top-center" });
+      return history.push("/signin");
+    }
+
+    return dispatch(actions.deleteCard(cardId, history));
+  };
+
   const handleEditCard = () => {
     if (!isAuthenticated) {
       toast("Sorry. You must be signed in to do edit a card.", { autoClose: 3000, position: "top-center" });
