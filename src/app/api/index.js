@@ -13,7 +13,7 @@ export const fetchCardsFromApi = async (callback) => {
 		const { data } = await axios.get(`${ROOT_URL}/${API_ROUTE}`);
 		return callback(data);
 	} catch (error) {
-		toast("🔴 Uh oh! We got an error when trying to load your cards.");
+		toast.error("🔴 Uh oh! We got an error when trying to load your cards.");
 		return console.error(error);
 	}
 };
@@ -21,11 +21,11 @@ export const fetchCardsFromApi = async (callback) => {
 // Create
 export const createCardFromApi = async (card, callback) => {
 	try {
-		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}`, card);
+		const { data } = await axios.post(`${ROOT_URL}/${API_ROUTE}`, card, { headers: { authorization: localStorage.getItem("token") } });
 		if (callback) return callback(data);
 		return null;
 	} catch (error) {
-		toast("🔴 Uh oh! There was an error when trying to crate your card.");
+		toast.error("🔴 Uh oh! There was an error when trying to crate your card.");
 		return console.error(error);
 	}
 };
@@ -37,7 +37,7 @@ export const fetchCardFromApi = async (id, callback) => {
 		if (callback) return callback(data);
 		return null;
 	} catch (error) {
-		toast("🔴 Uh oh! There was an error when trying to update your card.");
+		toast.error("🔴 Uh oh! There was an error when trying to update your card.");
 		return console.error(error);
 	}
 };
@@ -45,10 +45,10 @@ export const fetchCardFromApi = async (id, callback) => {
 // Update
 export const updateCardFromApi = async (id, updatedFields, callback) => {
 	try {
-		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}`, updatedFields);
+		const { data } = await axios.put(`${ROOT_URL}/${API_ROUTE}/${id}`, updatedFields, { headers: { authorization: localStorage.getItem("token") } });
 		return callback(data);
 	} catch (error) {
-		toast("🔴 Uh oh! There was an error when trying to update your card.");
+		toast.error("🔴 Uh oh! There was an error when trying to update your card.");
 		return console.error(error);
 	}
 };
@@ -56,16 +56,18 @@ export const updateCardFromApi = async (id, updatedFields, callback) => {
 // Delete
 export const deleteCardFromApi = async (id, callback) => {
 	try {
-		const { data } = await axios.delete(`${ROOT_URL}/${API_ROUTE}/${id}`);
+		const { data } = await axios.delete(`${ROOT_URL}/${API_ROUTE}/${id}`, { headers: { authorization: localStorage.getItem("token") } });
 		if (callback) return callback(data);
 		return null;
 	} catch (error) {
-		toast("🔴 Uh oh! There was an error when trying to delete your card.");
-		return console.error(error);
+		toast.error(`🔴 Uh oh! There was an error when trying to delete your card. ${error}`);
+		// return console.error(error);
+		if (callback) return callback(error);
+		return null;
 	}
 };
 
-export const generateCards = async (quantity, callback) => {
+export const generateCardsFromApi = async (quantity, callback) => {
 	try {
 		const { data } = await axios.get(`https://randomuser.me/api/?results=${quantity}`);
 		const cards = data.results.map(({ name, picture, dob }) => ({
@@ -86,9 +88,33 @@ export const generateCards = async (quantity, callback) => {
 		}));
 		return callback(cards);
 	} catch (error) {
-		toast("🔴 Uh oh! There was an error when trying to generate cards.");
+		toast.error("🔴 Uh oh! There was an error when trying to generate cards.");
 		return console.error(error);
 	}
 };
 
-export const dropAllEntriesFromApi = (arrayOfIds) => arrayOfIds.forEach((id) => deleteCardFromApi(id, () => toast(`Deleted entry with id: ${id}`)));
+// export const dropAllEntriesFromApi = (arrayOfIds) => arrayOfIds.forEach((id) => deleteCardFromApi(id, () => toast(`Deleted entry with id: ${id}`)));
+
+// Sign Up
+export const signUpUserFromApi = async ({ email, password, authorName }, callback) => {
+	try {
+		const { data } = await axios.post(`${ROOT_URL}/signup`, { email, password, authorName });
+		if (callback) return callback(data);
+		return null;
+	} catch (error) {
+		toast.error(`🔴 Uh oh! There was an error while trying to sign you up. ${error}`);
+		return console.error(error);
+	}
+};
+
+// Sign In
+export const signInUserFromApi = async ({ email, password, authorName }, callback) => {
+	try {
+		const { data } = await axios.post(`${ROOT_URL}/signin`, { email, password, authorName });
+		if (callback) return callback(data);
+		return null;
+	} catch (error) {
+		toast.error(`🔴 Uh oh! There was an error while trying to sign you in. ${error}`);
+		return console.error(error);
+	}
+};

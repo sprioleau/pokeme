@@ -6,25 +6,37 @@ import { FiPlusSquare } from "react-icons/fi";
 import { GiCardRandom } from "react-icons/gi";
 import { IoTrashOutline } from "react-icons/io5";
 
-import { toggleModalVisibility, generateCards, deleteAllCards } from "../store/actions";
-import { selectCards } from "../store/selectors";
+import { toast } from "react-toastify";
+import { toggleModalVisibility, generateCards, deleteAllCards, signOutUser } from "../store/actions";
+import { selectCards, selectIsAuthenticated } from "../store/selectors";
 import NewCard from "./NewCard";
 
-const GENERATED_CARDS = 1;
+const GENERATED_CARDS_QUANTITY = 1;
 
-function Nav() {
+const Nav = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { pathname } = useLocation();
   const isHome = pathname === "/" || pathname === "/cards";
+
   const cards = useSelector(selectCards);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const handleRemoveAllCards = () => {
     const ids = cards.map(({ id }) => id);
     dispatch(deleteAllCards(ids, history));
   };
-  const handleGenerateCards = () => dispatch(generateCards(GENERATED_CARDS, history));
-  const handleCreateNewCard = () => dispatch(toggleModalVisibility(<NewCard />));
+
+  const handleGenerateCards = () => dispatch(generateCards(GENERATED_CARDS_QUANTITY, history));
+  const handleCreateNewCard = () => {
+    if (!isAuthenticated) {
+      toast("Sorry. You need to be signed in to create a card.", { autoClose: 3000, position: "top-center" });
+      return history.push("/signin");
+    }
+
+    return dispatch(toggleModalVisibility(<NewCard />));
+  };
+  const handleSignOut = () => dispatch(signOutUser(history));
 
   return (
     <nav className="nav">
@@ -37,25 +49,40 @@ function Nav() {
             <Button type="button" className="btn">All Cards</Button>
           </Link>
         </Box>
-        {/* <Spacer /> */}
+        {isAuthenticated ? (
+          <Box p="4">
+            <Link to="/" className="no-decoration">
+              <Button type="button" className="btn" onClick={handleSignOut}>Sign Out</Button>
+            </Link>
+          </Box>
+        ) : (
+          <>
+            <Box p="4">
+              <Link to="/signup" className="no-decoration">
+                <Button type="button" className="btn">Sign Up</Button>
+              </Link>
+            </Box>
+            <Box p="4">
+              <Link to="/signin" className="no-decoration">
+                <Button type="button" className="btn">Sign In</Button>
+              </Link>
+            </Box>
+          </>
+        )}
         {isHome && (
           <>
-            {cards.length > 0 && (
-              <>
-                <Box p="4">
-                  <Button type="button" className="btn" onClick={handleRemoveAllCards}>
-                    <span className="btn-icon"><IoTrashOutline /></span>Drop all cards
-                  </Button>
-                </Box>
-                {/* <Spacer /> */}
-              </>
-            )}
             <Box p="4">
               <Button type="button" className="btn" onClick={handleGenerateCards}><span className="btn-icon"><GiCardRandom /></span>
-                {`Generate ${GENERATED_CARDS > 1 ? `${GENERATED_CARDS} Cards` : "a Card"}`}
+                {`Generate ${GENERATED_CARDS_QUANTITY > 1 ? `${GENERATED_CARDS_QUANTITY} Cards` : "a Card"}`}
               </Button>
             </Box>
-            {/* <Spacer /> */}
+            {cards.length > 0 && (
+              <Box p="4">
+                <Button type="button" className="btn" onClick={handleRemoveAllCards}>
+                  <span className="btn-icon"><IoTrashOutline /></span>Drop all cards
+                </Button>
+              </Box>
+            )}
           </>
         )}
         <Box p="4">
@@ -64,6 +91,6 @@ function Nav() {
       </Wrap>
     </nav>
   );
-}
+};
 
 export default Nav;

@@ -2,17 +2,27 @@ import React from "react";
 import { IoTrashOutline } from "react-icons/io5";
 import { RiEdit2Line } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 
 import EditCard from "./EditCard";
 import * as actions from "../store/actions";
+import { selectIsAuthenticated } from "../store/selectors";
 
 const CardToolbar = ({ cardId }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const handleDeleteCard = () => dispatch(actions.deleteCard(cardId, history));
-  const handleEditCard = () => dispatch(actions.toggleModalVisibility(<EditCard />));
+  const handleEditCard = () => {
+    if (!isAuthenticated) {
+      toast("Sorry. You must be signed in to do edit a card.", { autoClose: 3000, position: "top-center" });
+      return history.push("/signin");
+    }
+
+    return dispatch(actions.toggleModalVisibility(<EditCard />));
+  };
 
   return (
     <div className="card-toolbar">

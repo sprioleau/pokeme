@@ -26,6 +26,9 @@ Deployed URL: [pokeme-cards.netlify.app](https://pokeme-cards.netlify.app/)
 - Improved 3D card look (required swapping out library) by making use of Sass mixins and the `transform: translateZ()` declaration
 - 🥚 Added Easter egg for glass card style
 
+### With Authentication Short Assignment Work
+- Prevented unauthenticated users from creating new cards. I did not do this via an added `PrivateRoute` component, since a modal (not a separate route) is being used for creating/editing a card. Instead, I called `history.push("/signin")` using `react-router-dom`.
+
 ## What Didn't
 
 - Would have liked to refactor the card styling so that it scales well with the browser window size

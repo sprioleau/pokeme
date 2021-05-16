@@ -94,13 +94,15 @@ export const deleteCard = (id, history) => {
 export const deleteAllCards = (arrayOfIds, history) => {
 	return (dispatch) => {
 		arrayOfIds.forEach((id) => api.deleteCardFromApi(id, ({ message }) => {
-			if (message.toLowerCase().includes("success")) toast(`Deleted card with ID: ${id}`);
+			if (message.toLowerCase().includes("success")) {
+				toast(`Deleted card with ID: ${id}`);
+				dispatch({
+					type: types.DELETE_CARD,
+					message,
+					id
+				});
+			}
 		}));
-
-		dispatch({
-			type: types.DELETE_ALL_CARDS,
-			ids: arrayOfIds
-		});
 
 		return history.push("/cards");
 	};
@@ -109,7 +111,7 @@ export const deleteAllCards = (arrayOfIds, history) => {
 export const generateCards = (quantity, history) => {
 	if (quantity >= 50) return null;
 
-	return (dispatch) => api.generateCards(quantity, (cards) => {
+	return (dispatch) => api.generateCardsFromApi(quantity, (cards) => {
 		cards.forEach((cardData) => {
 			api.createCardFromApi(cardData, (newCardInDatabase) => {
 				dispatch({
@@ -121,4 +123,37 @@ export const generateCards = (quantity, history) => {
 
 		return history.push("/cards");
 	});
+};
+
+export const signUpUser = ({ email, password, authorName }, history) => {
+	console.log("{ email, password, authorName }:", { email, password, authorName });
+	return (dispatch) => api.signUpUserFromApi({ email, password, authorName }, (user) => {
+		dispatch({
+			type: types.AUTH_USER,
+			user
+		});
+
+		localStorage.setItem("token", user.token);
+		return history.push("/");
+	});
+};
+
+export const signInUser = ({ email, password }, history) => {
+	return (dispatch) => api.signInUserFromApi({ email, password }, (user) => {
+		dispatch({
+			type: types.AUTH_USER,
+			user
+		});
+
+		localStorage.setItem("token", user.token);
+		return history.push("/");
+	});
+};
+
+export const signOutUser = (history) => {
+  return (dispatch) => {
+		dispatch({ type: types.DEAUTH_USER });
+    localStorage.removeItem("token");
+    history.push("/");
+  };
 };

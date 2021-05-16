@@ -12,6 +12,8 @@ import Modal from "./components/Modal";
 import Cards from "./components/Cards";
 import Card from "./components/Card";
 import RefreshCard from "./components/RefreshCard";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 
 const App = () => {
 	const modalContentExists = useSelector(selectModalContentExists);
@@ -36,9 +38,10 @@ const App = () => {
 					<Route exact path={["/", "/cards"]} component={Cards} />
 					<Route path="/cards/:cardId" component={Card} />
 					<Route path="/refresh" component={RefreshCard} />
+					<Route path="/signup" component={SignUp} />
+					<Route path="/signin" component={SignIn} />
 					<Route component={Error404} />
 				</Switch>
-
 			</Router>
 		</div>
 	);

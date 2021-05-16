@@ -43,8 +43,9 @@ const Cards = () => {
                   </div>
                   <img className="cards__card-type-badge" src={`../images/pokeme-types/${card.type ? `${card.type.toLowerCase()}.svg` : "bug.svg"}`} alt={card.name} />
                 </Tilt>
-                <h4 className="cards__card-name" to={`/cards/${card.id}`}>{card.name}</h4>
               </NavLink>
+              <h4 className="cards__card-name" to={`/cards/${card.id}`}>{card.name}</h4>
+              <p className="cards__card-byline">{`PokéMe by ${card.authorName}`}</p>
             </li>
           );
         })}

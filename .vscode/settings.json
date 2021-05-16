@@ -4,5 +4,11 @@
 	},
 	"eslint.format.enable": true,
 	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
-	"editor.formatOnSave": true
+	"editor.formatOnSave": true,
+	"cSpell.words": [
+		"Catchin",
+		"DEAUTH",
+		"Pokeme",
+		"signin"
+	]
 }

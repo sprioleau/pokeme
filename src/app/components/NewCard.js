@@ -1,28 +1,17 @@
 import React from "react";
-import { ChakraProvider, extendTheme, Heading } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
 import NewCardForm from "./NewCardForm";
+import ChakraWrapper from "./ChakraWrapper";
 
 const NewCard = () => {
-	const customTheme = extendTheme({
-		styles: {
-			global: {
-				body: {
-					fontFamily: null,
-					lineHeight: null,
-					bg: null
-				}
-			}
-		}
-	});
-
 	return (
 		<div className="new-card">
-			<ChakraProvider theme={customTheme}>
+			<ChakraWrapper>
 				<Heading as="h1" color="whiteAlpha.900" size="xl" textAlign="center">
 					Create a PokéMe Card
 				</Heading>
 				<NewCardForm />
-			</ChakraProvider>
+			</ChakraWrapper>
 		</div>
 	);
 };
