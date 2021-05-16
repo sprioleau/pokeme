@@ -9,7 +9,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { toggleModalVisibility, generateCards, deleteAllCards, signOutUser } from "../store/actions";
 import { selectCards, selectIsAuthenticated } from "../store/selectors";
-import NewCard from "./form/NewCard";
+import CardFormWrapper from "./form/CardFormWrapper";
 
 const GENERATED_CARDS_QUANTITY = 1;
 
@@ -42,7 +42,7 @@ const Nav = () => {
       return history.push("/signin");
     }
 
-    return dispatch(toggleModalVisibility(<NewCard />));
+    return dispatch(toggleModalVisibility(<CardFormWrapper action="create" />));
   };
   const handleSignOut = () => dispatch(signOutUser(history));
 

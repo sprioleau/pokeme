@@ -14,7 +14,6 @@ const localizedFormat = require("dayjs/plugin/localizedFormat");
 const Card = () => {
   dayjs.extend(localizedFormat);
   const [card, setCard] = useState();
-  console.log("card:", card);
   const [flipped, setFlipped] = useState(false);
   const dispatch = useDispatch();
   const { cardId } = useParams();
@@ -83,7 +82,7 @@ const Card = () => {
               </div>
               <div className="card__anatomy">
                 <p className="card__anatomy-text">{`${card.type} PokéMe`}</p>
-                <p className="card__anatomy-text">{`Length: ${card.height.ft}' ${card.height.in}"`}</p>
+                <p className="card__anatomy-text">{`Length: ${card.height.feet}' ${card.height.inches}"`}</p>
                 <p className="card__anatomy-text">{`Weight: ${card.weight} lbs`}</p>
               </div>
               <ul className="card__attacks">{Object.values(card.attacks).map((attack) => (

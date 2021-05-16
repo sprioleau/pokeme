@@ -37,10 +37,12 @@ const CardsReducer = (state = initialState, action) => {
 
 		// Update
 		case types.UPDATE_CARD: {
+			const newCurrentCard = action.updatedCard ?? state.currentCard;
+
 			return {
 				...state,
 				cards: [...state.cards, action.updatedCard],
-				currentCard: action.updatedCard,
+				currentCard: newCurrentCard,
 				modalContent: {},
 			};
 		}

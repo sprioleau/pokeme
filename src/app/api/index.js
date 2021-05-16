@@ -77,8 +77,8 @@ export const generateCardsFromApi = async (quantity, callback) => {
 			attacks: getAttacks(moves),
 			hitPoints: getHitPoints(),
 			height: {
-				ft: 5,
-				in: 10
+				feet: 5,
+				inches: 10
 			},
 			weight: dob.age * 2,
 			weakness: getRandomFromArray(pokemonTypes),

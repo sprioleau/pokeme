@@ -5,9 +5,9 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
-import EditCard from "./form/EditCard";
 import * as actions from "../store/actions";
 import { selectIsAuthenticated } from "../store/selectors";
+import CardFormWrapper from "./form/CardFormWrapper";
 
 const CardToolbar = ({ cardId }) => {
   const history = useHistory();
@@ -29,7 +29,7 @@ const CardToolbar = ({ cardId }) => {
       return history.push("/signin");
     }
 
-    return dispatch(actions.toggleModalVisibility(<EditCard />));
+    return dispatch(actions.toggleModalVisibility(<CardFormWrapper action="update" />));
   };
 
   return (

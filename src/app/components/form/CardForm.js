@@ -20,7 +20,7 @@ import {
   Button,
   Textarea,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -28,47 +28,29 @@ import moves from "../../data/pokemon-moves";
 import pokemonTypes from "../../data/pokemon-types";
 import ChakraWrapper from "../ChakraWrapper";
 import { getRandomFromArray } from "../../api/functions/api.functions";
-import { createCard, toggleModalVisibility } from "../../store/actions/index";
+import { createCard, toggleModalVisibility, updateCard } from "../../store/actions/index";
 import Pong from "../Pong";
+import { convertAnatomySpecToNumber } from "./functions";
+import { selectCurrentCard } from "../../store/selectors";
+// import { convertAnatomySpecToNumber, formatFeet, formatInches, formatWeight } from "./functions";
 
-const NewCard = () => {
-	const formatFeet = (value) => `${value.toString()} ft.`;
-  const formatInches = (value) => `${value.toString()} in.`;
-  const formatWeight = (value) => `${value.toString()} lbs.`;
-
-  const dispatch = useDispatch();
-  const history = useHistory();
-
-	const [formFields, setFormFields] = useState({
-		name: "",
-		photoUrl: "",
-		type: getRandomFromArray(pokemonTypes.slice(0, 5)),
-		weakness: getRandomFromArray(pokemonTypes.slice(5, pokemonTypes.length)),
-		height: {
-			feet: formatFeet(5),
-			inches: formatInches(6),
-		},
-		weight: formatWeight(100),
-		attacks: {
-			move1: getRandomFromArray(moves),
-			move2: {}
-		},
-		hitPoints: 100,
-		message: "",
-		isSpecial: false,
-		showSpecial: true,
-	});
+const CardForm = ({ initialState, action }) => {
+	const [formFields, setFormFields] = useState(initialState);
+	const currentCard = useSelector(selectCurrentCard);
 
   const [nameHasBlurred, setNameHasBlurred] = useState(false);
   const [photoUrlHasBlurred, setPhotoUrlHasBlurred] = useState(false);
+
+	const dispatch = useDispatch();
+	const history = useHistory();
 
   const handleNameChange = (e) => setFormFields({ ...formFields, name: e.target.value });
   const handlePhotoUrlChange = (e) => setFormFields({ ...formFields, photoUrl: e.target.value });
   const handleSetType = (e) => setFormFields({ ...formFields, type: e.target.value });
   const handleSetWeakness = (e) => setFormFields({ ...formFields, weakness: e.target.value });
-  const handleFeetChange = (value) => setFormFields({ ...formFields, height: { ...formFields.height, feet: formatFeet(value) } });
-  const handleInchesChange = (value) => setFormFields({ ...formFields, height: { ...formFields.height, inches: formatInches(value) } });
-  const handleWeightChange = (value) => setFormFields({ ...formFields, weight: formatWeight(value) });
+  const handleFeetChange = (value) => setFormFields({ ...formFields, height: { ...formFields.height, feet: convertAnatomySpecToNumber(value) } });
+  const handleInchesChange = (value) => setFormFields({ ...formFields, height: { ...formFields.height, inches: convertAnatomySpecToNumber(value) } });
+  const handleWeightChange = (value) => setFormFields({ ...formFields, weight: convertAnatomySpecToNumber(value) });
 	const handleSetMove1 = (e) => setFormFields({ ...formFields, attacks: { ...formFields.attacks, move1: moves.find((move) => move.name === e.target.value) } });
 	const handleSetMove2 = (e) => setFormFields({ ...formFields, attacks: { ...formFields.attacks, move2: moves.find((move) => move.name === e.target.value) } });
   const handleHitPointsChange = (value) => setFormFields({ ...formFields, hitPoints: value });
@@ -97,9 +79,6 @@ const NewCard = () => {
 
   const isReadyToSubmit = name && photoUrl && type && weakness && feet && inches && weight && hitPoints && attacks.move1;
 
-	const ready = { name, photoUrl, type, weakness, feet, inches, weight, hitPoints, move1: attacks.move1 };
-	console.log("ready:", ready);
-
 	// Adapted from: https://stackoverflow.com/questions/286141/remove-blank-attributes-from-an-object-in-javascript
 	// This function removes move2 from the attacks object if it is null (unset by the user)
 	const cleanAttacks = (attacksObject) => {
@@ -116,25 +95,26 @@ const NewCard = () => {
     const newCard = {
 			...formFields,
 			height: {
-				ft: formFields.height.feet.replace(" ft.", ""),
-				in: formFields.height.inches.replace(" in.", ""),
+				feet: convertAnatomySpecToNumber(formFields.height.feet),
+				inches: convertAnatomySpecToNumber(formFields.height.inches),
 			},
 			attacks: cleanAttacks(attacks),
-			weight: formFields.weight.replace(" lbs.", ""),
+			weight: convertAnatomySpecToNumber(formFields.weight),
 			retreatCost: getRandomFromArray([1, 2, 3]),
       description: "A lovely PokéMe with an exceptional personality.",
 		};
 
-    dispatch(createCard(newCard, history));
+		if (action === "create") return dispatch(createCard(newCard, history));
+		return dispatch(updateCard(currentCard.id, newCard, history));
 	};
 
 	return (
-		<div className="new-card">
+		<div className={action === "create" ? "new-card" : "edit-card"}>
 			<ChakraWrapper>
 				<Heading as="h1" color="whiteAlpha.900" size="xl" textAlign="center">
-					Create a PokéMe Card
+					{action === "create" ? "Create a PokéMe Card" : "Edit PokéMe Card"}
 				</Heading>
-				<Pong isSelected={formFields.isSpecial} onClick={toggleIsSpecial} show={formFields.showSpecial} src="../images/pikachu.png" alt="Pikachu" />
+				{action === "create" && (<Pong isSelected={formFields.isSpecial} onClick={toggleIsSpecial} show={formFields.showSpecial} src="../images/pikachu.png" alt="Pikachu" />)}
 				<Box
 					backgroundColor="#fff"
 					borderWidth="1px"
@@ -173,14 +153,23 @@ const NewCard = () => {
 							<FormControl isRequired id="length">
 								<FormLabel>Length</FormLabel>
 								<HStack>
-									<NumberInput maxW={20} step={1} defaultValue={5} value={feet} min={2} max={8} pattern="[0-9]\sft." onChange={(value) => handleFeetChange(value)}>
+									<NumberInput width={28} step={1} defaultValue={5} value={`${feet} ft.`} min={2} max={8} pattern="[0-9]\sft." onChange={(value) => handleFeetChange(value)}>
 										<NumberInputField />
 										<NumberInputStepper>
 											<NumberIncrementStepper />
 											<NumberDecrementStepper />
 										</NumberInputStepper>
 									</NumberInput>
-									<NumberInput maxW={20} step={1} defaultValue={6} value={inches} min={0} max={11} pattern="[0-9]\sin." onChange={(value) => handleInchesChange(value)}>
+									<NumberInput
+										width={28}
+										step={1}
+										defaultValue={6}
+										value={`${inches} in.`}
+										min={0}
+										max={11}
+										pattern="[0-9][0-9]?\sin."
+										onChange={(value) => handleInchesChange(value)}
+									>
 										<NumberInputField />
 										<NumberInputStepper>
 											<NumberIncrementStepper />
@@ -191,7 +180,16 @@ const NewCard = () => {
 							</FormControl>
 							<FormControl isRequired id="weight">
 								<FormLabel>Weight</FormLabel>
-								<NumberInput width={28} step={10} defaultValue={100} value={weight} min={2} max={1000} pattern="[0-9]*(.[0-9]+)?\slbs." onChange={(value) => handleWeightChange(value)}>
+								<NumberInput
+									width={28}
+									step={10}
+									defaultValue={100}
+									value={`${weight} lbs.`}
+									min={2}
+									max={1000}
+									pattern="[0-9]*(.[0-9]+)?\slbs."
+									onChange={(value) => handleWeightChange(value)}
+								>
 									<NumberInputField />
 									<NumberInputStepper>
 										<NumberIncrementStepper />
@@ -240,4 +238,4 @@ const NewCard = () => {
 	);
 };
 
-export default NewCard;
+export default CardForm;
