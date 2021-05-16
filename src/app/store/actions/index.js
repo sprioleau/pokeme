@@ -126,7 +126,6 @@ export const generateCards = (quantity, history) => {
 };
 
 export const signUpUser = ({ email, password, authorName }, history) => {
-	console.log("{ email, password, authorName }:", { email, password, authorName });
 	return (dispatch) => api.signUpUserFromApi({ email, password, authorName }, (user) => {
 		dispatch({
 			type: types.AUTH_USER,
