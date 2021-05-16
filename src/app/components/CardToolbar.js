@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
-import EditCard from "./EditCard";
+import EditCard from "./form/EditCard";
 import * as actions from "../store/actions";
 import { selectIsAuthenticated } from "../store/selectors";
 

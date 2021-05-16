@@ -9,7 +9,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { toggleModalVisibility, generateCards, deleteAllCards, signOutUser } from "../store/actions";
 import { selectCards, selectIsAuthenticated } from "../store/selectors";
-import NewCard from "./NewCard";
+import NewCard from "./form/NewCard";
 
 const GENERATED_CARDS_QUANTITY = 1;
 
@@ -51,7 +51,7 @@ const Nav = () => {
       <Link to="/">
         <img className="nav__logo" src="../images/logo/pokeme_logo.png" alt="pokéme logo" />
       </Link>
-      <Wrap>
+      <Wrap justify="center">
         <Box p="4">
           <Link to="/" className="no-decoration">
             <Button type="button" className="btn">All Cards</Button>

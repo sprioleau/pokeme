@@ -14,6 +14,7 @@ const localizedFormat = require("dayjs/plugin/localizedFormat");
 const Card = () => {
   dayjs.extend(localizedFormat);
   const [card, setCard] = useState();
+  console.log("card:", card);
   const [flipped, setFlipped] = useState(false);
   const dispatch = useDispatch();
   const { cardId } = useParams();
@@ -46,8 +47,6 @@ const Card = () => {
       <Tilt
         className="parallax"
         perspective={1000}
-        glareEnable
-        glareMaxOpacity={0.45}
         scale={1.02}
         flipHorizontally={flipped}
         transitionSpeed={1500}
@@ -87,7 +86,7 @@ const Card = () => {
                 <p className="card__anatomy-text">{`Length: ${card.height.ft}' ${card.height.in}"`}</p>
                 <p className="card__anatomy-text">{`Weight: ${card.weight} lbs`}</p>
               </div>
-              <ul className="card__attacks">{card.attacks.map((attack) => (
+              <ul className="card__attacks">{Object.values(card.attacks).map((attack) => (
                 <li key={attack.name} className="card__attack">
                   <div className="card__attack-energy-cost"><EnergyCostIcons cost={attack.energyCost} type={attack.type} /></div>
                   <div className="card__attack-name-description"><span className="card__attack-name">{attack.name}</span> <span className="card__attack-description">{attack.description}</span></div>
