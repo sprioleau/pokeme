@@ -29,6 +29,11 @@ Deployed URL: [pokeme-cards.netlify.app](https://pokeme-cards.netlify.app/)
 ### With Authentication Short Assignment Work
 - Prevented unauthenticated users from creating new cards. I did not do this via an added `PrivateRoute` component, since a modal (not a separate route) is being used for creating/editing a card. Instead, I called `history.push("/signin")` using `react-router-dom`.
 
+### With AWS S3 Bucket Photo Uploading
+- Added support for uploading photos
+- Users can either upload a photo or enter a photo URL
+- A preview of the photo is shown before uploading
+
 ## What Didn't
 
 - Would have liked to refactor the card styling so that it scales well with the browser window size
@@ -46,8 +51,9 @@ As a note, I implemented logic to keep the Redux state and database in sync.
 - Added lots of styling to give it a Pokémon-inspired look and feel
 - Created functionality for generating a random PokéMe card
 - Input validation for card fields
+- Added support for uploading photos
 
-### Supercharged Title Field
+### Supercharged Title Field (as part of Lab 4 Work)
 I took the lab further by ⚡️ supercharging the `title` field with a stringified JSON object with all the data needed to render a PokéMe card. I then parsed the data comping back from the database in order to render it out into the `Card` component. This approach also allowed me to store an additional `message` key, where I could store Markdown to be rendered in the UI.
 
 ## Screenshots
@@ -87,3 +93,6 @@ Glass Card
 
 Filter by Type 
 ![Filter by Type](https://pokeme-cards.netlify.app/images/screenshots/filter.gif)
+
+Photo Upload
+![Photo Upload](https://pokeme-cards.netlify.app/images/screenshots/photo-upload.gif)
