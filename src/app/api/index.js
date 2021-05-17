@@ -61,7 +61,7 @@ export const deleteCardFromApi = async (id, callback) => {
 		return null;
 	} catch (error) {
 		toast.error(`🔴 Uh oh! There was an error when trying to delete your card. ${error}`);
-		// return console.error(error);
+		console.error(error);
 		if (callback) return callback(error);
 		return null;
 	}
@@ -93,8 +93,6 @@ export const generateCardsFromApi = async (quantity, callback) => {
 	}
 };
 
-// export const dropAllEntriesFromApi = (arrayOfIds) => arrayOfIds.forEach((id) => deleteCardFromApi(id, () => toast(`Deleted entry with id: ${id}`)));
-
 // Sign Up
 export const signUpUserFromApi = async ({ email, password, authorName }, callback) => {
 	try {
@@ -125,11 +123,7 @@ const getSignedRequest = (file) => {
   return axios.get(`${ROOT_URL}/sign-s3?file-name=${fileName}&file-type=${file.type}`);
 };
 
-// return a promise that uploads file directly to S3
-// note how we return the passed in url here rather than any return value
-// since we already know what the url will be - just not that it has been uploaded
 const uploadFileToS3 = (signedRequest, file, url) => {
-	console.log("signedRequest, file, url:", { signedRequest, file, url });
 	return new Promise((fulfill, reject) => {
     axios.put(signedRequest, file, { headers: { "Content-Type": file.type } }).then((response) => {
       fulfill(url);
@@ -140,18 +134,12 @@ const uploadFileToS3 = (signedRequest, file, url) => {
 };
 
 export const uploadImage = async (file) => {
-	// returns a promise so you can handle error and completion in your component
 	try {
 		const response = await getSignedRequest(file);
 		const { data: { signedRequest, url } } = response;
-		console.log("data from uploadImage:", response.data);
 		return uploadFileToS3(signedRequest, file, url);
 	} catch (error) {
 		toast.error(`🔴 Uh oh! There was an error while trying to upload your image. ${error}`);
 		return console.error(error);
 	}
-
-	// return getSignedRequest(file).then((response) => {
-	//   return uploadFileToS3(response.data.signedRequest, file, response.data.url);
-	// });
 };

@@ -1,0 +1,27 @@
+.new-card, .edit-card {
+  input[type="file"] {
+    display: none;
+  } 
+
+  .upload-image-button {
+    @include center;
+    justify-content: flex-start;
+    line-height: 1;
+    box-shadow: none;
+    background-color: var(--chakra-colors-gray-300);
+  }
+
+  .file-upload {
+    cursor: pointer;
+  }
+
+  .shrink {
+    flex: 0 1 200px;
+    width: unset;
+  }
+
+  .grow {
+    flex: 1 0;
+    width: unset;
+  }
+}

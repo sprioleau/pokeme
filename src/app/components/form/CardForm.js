@@ -9,6 +9,7 @@ import {
   Select,
 	Input,
 	Image,
+	Switch,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -21,6 +22,7 @@ import {
   Button,
   Textarea,
 } from "@chakra-ui/react";
+// import { useDispatch } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -30,7 +32,8 @@ import pokemonTypes from "../../data/pokemon-types";
 import ChakraWrapper from "../ChakraWrapper";
 import { uploadImage } from "../../api";
 import { getRandomFromArray } from "../../api/functions/api.functions";
-import { createCard, toggleModalVisibility, updateCard } from "../../store/actions/index";
+// import { toggleModalVisibility } from "../../store/actions/index";
+import { toggleModalVisibility, createCard, updateCard } from "../../store/actions/index";
 import Pong from "../Pong";
 import { convertAnatomySpecToNumber } from "./functions";
 import { selectCurrentCard } from "../../store/selectors";
@@ -39,7 +42,7 @@ import { selectCurrentCard } from "../../store/selectors";
 const CardForm = ({ initialState, action }) => {
 	const [formFields, setFormFields] = useState(initialState);
 	const [preview, setPreview] = useState("");
-	// const [file, setFile] = useState(null);
+	const [showPhotoUrlInput, setShowPhotoUrlInput] = useState(false);
 	const currentCard = useSelector(selectCurrentCard);
 
   const [nameHasBlurred, setNameHasBlurred] = useState(false);
@@ -70,7 +73,9 @@ const CardForm = ({ initialState, action }) => {
   const handleNameBlur = () => setNameHasBlurred(true);
   const handlePhotoUrlFocus = () => setPhotoUrlHasBlurred(false);
   const handlePhotoUrlBlur = () => setPhotoUrlHasBlurred(true);
-  const toggleIsSpecial = () => {
+	const handleTogglePhotoUrlVisibility = () => setShowPhotoUrlInput(!showPhotoUrlInput);
+
+	const toggleIsSpecial = () => {
     const toastDuration = 3000;
 		setFormFields({ ...formFields, isSpecial: true });
     toast("Pika! Glass material applied.", { autoClose: toastDuration });
@@ -81,7 +86,7 @@ const CardForm = ({ initialState, action }) => {
 
 	const { name, photoUrl, type, weakness, weight, hitPoints, message, attacks, height: { feet, inches } } = formFields;
 
-  const isReadyToSubmit = name && photoUrl && type && weakness && feet && inches && weight && hitPoints && attacks.move1;
+  const isReadyToSubmit = name && (photoUrl || preview.url) && type && weakness && feet && inches && weight && hitPoints && attacks.move1;
 
 	// Adapted from: https://stackoverflow.com/questions/286141/remove-blank-attributes-from-an-object-in-javascript
 	// This function removes move2 from the attacks object if it is null (unset by the user)
@@ -95,41 +100,40 @@ const CardForm = ({ initialState, action }) => {
 
 	const handleImageUpload = (e) => {
 		const uploadedFile = e.target.files[0];
-		// setFile(uploadedFile);
-		// if (uploadedFile === null || uploadedFile === undefined) return toast("No file found");
-		setPreview({ url: window.URL.createObjectURL(uploadedFile), uploadedFile });
+		if (uploadedFile === null || uploadedFile === undefined) return toast("No file found");
+		return setPreview({ url: window.URL.createObjectURL(uploadedFile), uploadedFile });
+	};
+
+	const newCard = {
+		...formFields,
+		height: {
+			feet: convertAnatomySpecToNumber(formFields.height.feet),
+			inches: convertAnatomySpecToNumber(formFields.height.inches),
+		},
+		attacks: cleanAttacks(attacks),
+		weight: convertAnatomySpecToNumber(formFields.weight),
+		retreatCost: getRandomFromArray([1, 2, 3]),
+		description: "A lovely PokéMe with an exceptional personality.",
+	};
+
+	const handleDispatchAction = (card) => {
+			if (action === "create") return dispatch(createCard(card, history));
+			return dispatch(updateCard(currentCard.id, card, history));
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		let photoUrlToUse = formFields.photoUrl;
-
-		// if (preview.uploadedFile) {
+		if (preview.uploadedFile) {
 			uploadImage(preview.uploadedFile).then((url) => {
-				console.log("url in promise:", url);
-				photoUrlToUse = url;
+				return handleDispatchAction({ ...newCard, photoUrl: url });
 			}).catch((error) => {
-				toast.error(`🔴 Uh oh! There was an error while trying to upload your image. ${error}`);
 				console.error(error);
+				return toast.error(`🔴 Uh oh! There was an error while trying to upload your image. ${error}`);
 			});
-		// }
+		}
 
-		const newCard = {
-			...formFields,
-			photoUrl: photoUrlToUse,
-			height: {
-				feet: convertAnatomySpecToNumber(formFields.height.feet),
-				inches: convertAnatomySpecToNumber(formFields.height.inches),
-			},
-			attacks: cleanAttacks(attacks),
-			weight: convertAnatomySpecToNumber(formFields.weight),
-			retreatCost: getRandomFromArray([1, 2, 3]),
-      description: "A lovely PokéMe with an exceptional personality.",
-		};
-
-		if (action === "create") return dispatch(createCard(newCard, history));
-		return dispatch(updateCard(currentCard.id, newCard, history));
+		handleDispatchAction(newCard);
 	};
 
 	return (
@@ -151,24 +155,51 @@ const CardForm = ({ initialState, action }) => {
 					onSubmit={handleSubmit}
 				>
 					<VStack spacing={4}>
-						{preview && (
-							<Image
-								id="preview"
-								borderRadius="full"
-								boxSize="150px"
-								src={preview?.url}
-								alt="Image preview"
-							/>
-						)}
-						<Input variant="outline" type="file" name="cover-image" onChange={handleImageUpload} />
 						<FormControl isRequired id="name" onFocus={handleNameFocus} onBlur={handleNameBlur} isInvalid={nameHasBlurred && !isValidName(name)}>
 							<FormLabel>Name</FormLabel>
 							<Input variant="outline" placeholder="Pikachu" value={name} onChange={handleNameChange} />
 						</FormControl>
-						<FormControl isRequired id="photo-url" onFocus={handlePhotoUrlFocus} onBlur={handlePhotoUrlBlur} isInvalid={photoUrlHasBlurred && !isValidUrl}>
-							<FormLabel>Image URL</FormLabel>
-							<Input variant="outline" placeholder="https://www.example.com/images/photo-of-me.png" value={photoUrl} onChange={handlePhotoUrlChange} />
-						</FormControl>
+						<HStack width="100%" spacing={4}>
+							{showPhotoUrlInput ? (
+								<FormControl isRequired id="photo-url" className="grow" onFocus={handlePhotoUrlFocus} onBlur={handlePhotoUrlBlur} isInvalid={photoUrlHasBlurred && !isValidUrl}>
+									<FormLabel>
+										Image URL
+									</FormLabel>
+									<Input variant="outline" placeholder="https://www.example.com/images/photo-of-me.png" value={photoUrl} onChange={handlePhotoUrlChange} />
+								</FormControl>
+							) : (
+								<>
+									{preview && (
+										<Image
+											id="preview"
+											boxSize="150px"
+											src={preview?.url}
+											alt="Image preview"
+											fit="contain"
+											maxW="180px"
+											maxH="150px"
+										/>
+									)}
+										<FormControl
+											isRequired
+											id="photo-url"
+											className="file-upload grow"
+											onFocus={handlePhotoUrlFocus}
+											onBlur={handlePhotoUrlBlur}
+											isInvalid={photoUrlHasBlurred && !isValidUrl}
+										>
+											<FormLabel htmlFor="upload-image" className="btn upload-image-button">
+												Upload Image
+												<Input variant="outline" id="upload-image" type="file" tabIndex="0" name="upload-image" onChange={handleImageUpload} />
+											</FormLabel>
+										</FormControl>
+								</>
+							)}
+							<FormControl display="flex" flexDirection="column" className="shrink">
+								<FormLabel htmlFor="image-url" mb="0" colorScheme="blue">{`${!showPhotoUrlInput ? "Use image URL" : "Upload photo"} instead?`}</FormLabel>
+								<Switch id="image-url" onChange={handleTogglePhotoUrlVisibility} />
+							</FormControl>
+						</HStack>
 						<HStack width="100%">
 							<FormControl isRequired id="type">
 								<FormLabel>Type</FormLabel>
