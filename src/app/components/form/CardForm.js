@@ -7,7 +7,8 @@ import {
   FormControl,
   FormLabel,
   Select,
-  Input,
+	Input,
+	Image,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -27,6 +28,7 @@ import { toast } from "react-toastify";
 import moves from "../../data/pokemon-moves";
 import pokemonTypes from "../../data/pokemon-types";
 import ChakraWrapper from "../ChakraWrapper";
+import { uploadImage } from "../../api";
 import { getRandomFromArray } from "../../api/functions/api.functions";
 import { createCard, toggleModalVisibility, updateCard } from "../../store/actions/index";
 import Pong from "../Pong";
@@ -36,6 +38,8 @@ import { selectCurrentCard } from "../../store/selectors";
 
 const CardForm = ({ initialState, action }) => {
 	const [formFields, setFormFields] = useState(initialState);
+	const [preview, setPreview] = useState("");
+	// const [file, setFile] = useState(null);
 	const currentCard = useSelector(selectCurrentCard);
 
   const [nameHasBlurred, setNameHasBlurred] = useState(false);
@@ -89,11 +93,31 @@ const CardForm = ({ initialState, action }) => {
 		return copy;
 	};
 
+	const handleImageUpload = (e) => {
+		const uploadedFile = e.target.files[0];
+		// setFile(uploadedFile);
+		// if (uploadedFile === null || uploadedFile === undefined) return toast("No file found");
+		setPreview({ url: window.URL.createObjectURL(uploadedFile), uploadedFile });
+	};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-    const newCard = {
+		let photoUrlToUse = formFields.photoUrl;
+
+		// if (preview.uploadedFile) {
+			uploadImage(preview.uploadedFile).then((url) => {
+				console.log("url in promise:", url);
+				photoUrlToUse = url;
+			}).catch((error) => {
+				toast.error(`🔴 Uh oh! There was an error while trying to upload your image. ${error}`);
+				console.error(error);
+			});
+		// }
+
+		const newCard = {
 			...formFields,
+			photoUrl: photoUrlToUse,
 			height: {
 				feet: convertAnatomySpecToNumber(formFields.height.feet),
 				inches: convertAnatomySpecToNumber(formFields.height.inches),
@@ -127,6 +151,16 @@ const CardForm = ({ initialState, action }) => {
 					onSubmit={handleSubmit}
 				>
 					<VStack spacing={4}>
+						{preview && (
+							<Image
+								id="preview"
+								borderRadius="full"
+								boxSize="150px"
+								src={preview?.url}
+								alt="Image preview"
+							/>
+						)}
+						<Input variant="outline" type="file" name="cover-image" onChange={handleImageUpload} />
 						<FormControl isRequired id="name" onFocus={handleNameFocus} onBlur={handleNameBlur} isInvalid={nameHasBlurred && !isValidName(name)}>
 							<FormLabel>Name</FormLabel>
 							<Input variant="outline" placeholder="Pikachu" value={name} onChange={handleNameChange} />
