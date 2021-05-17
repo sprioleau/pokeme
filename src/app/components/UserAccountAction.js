@@ -3,31 +3,54 @@ import { useDispatch } from "react-redux";
 import { useHistory, Link as ReactRouterLink } from "react-router-dom";
 import { Heading, Button, Box, VStack, FormControl, FormLabel, Input, Text, Link } from "@chakra-ui/react";
 
-import { signUpUser } from "../store/actions";
+import { signUpUser, signInUser } from "../store/actions";
 import ChakraWrapper from "./ChakraWrapper";
 
-const SignUp = () => {
+const UserAccountAction = ({ action }) => {
   const [authorName, setAuthorName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const fields = {
+    signup: {
+      heading: "Sign Up",
+      link: {
+        text: "Already have an account?",
+        route: "/signin",
+        linkText: "Sign In"
+      },
+      submitButtonText: "Sign Up",
+      isReadyToSubmit: email && password && authorName,
+      submitAction: () => dispatch(signUpUser({ email, password, authorName }, history))
+    },
+    signin: {
+      heading: "Sign In",
+      link: {
+        text: "Need an account?",
+        route: "/signup",
+        linkText: "Sign Up"
+      },
+      submitButtonText: "Sign In",
+      isReadyToSubmit: email && password,
+      submitAction: () => dispatch(signInUser({ email, password }, history))
+    },
+  };
+
   const handleUpdateAuthorName = (e) => setAuthorName(e.target.value);
   const handleUpdateEmail = (e) => setEmail(e.target.value);
   const handleUpdatePassword = (e) => setPassword(e.target.value);
-  const handleSignUp = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signUpUser({ email, password, authorName }, history));
+    fields[action].submitAction();
   };
-
-  const isReadyToSubmit = email && password;
 
   return (
     <div className="sign-up">
       <ChakraWrapper>
         <Heading as="h1" color="whiteAlpha.900" size="xl" textAlign="center">
-					Sign Up
+          {fields[action].heading}
         </Heading>
         <Box
           backgroundColor="#fff"
@@ -38,13 +61,15 @@ const SignUp = () => {
           p={6}
           m="10px auto"
           as="form"
-          onSubmit={handleSignUp}
+          onSubmit={handleSubmit}
         >
           <VStack spacing={4}>
-            <FormControl id="name" isRequired>
-              <FormLabel>Name</FormLabel>
-              <Input placeholder="Name" value={authorName} onChange={handleUpdateAuthorName} />
-            </FormControl>
+            {action === "signup" && (
+              <FormControl id="name" isRequired>
+                <FormLabel>Name</FormLabel>
+                <Input placeholder="Name" value={authorName} onChange={handleUpdateAuthorName} />
+              </FormControl>
+            )}
             <FormControl id="email" isRequired>
               <FormLabel>Email</FormLabel>
               <Input placeholder="Email" value={email} onChange={handleUpdateEmail} />
@@ -53,14 +78,13 @@ const SignUp = () => {
               <FormLabel>Password</FormLabel>
               <Input placeholder="Password" value={password} type="password" onChange={handleUpdatePassword} />
             </FormControl>
-            <Button disabled={!isReadyToSubmit} type="submit" colorScheme="blue" width="100%">Sign Up</Button>
-            <Text>Already have an account? <Link as={ReactRouterLink} to="/signin">Sign in</Link></Text>
+            <Button disabled={!fields[action].isReadyToSubmit} type="submit" colorScheme="blue" width="100%">{fields[action].submitButtonText}</Button>
+            <Text>{fields[action].link.text} <Link as={ReactRouterLink} to={fields[action].link.route}>{fields[action].link.linkText}</Link></Text>
           </VStack>
         </Box>
       </ChakraWrapper>
     </div>
-
   );
 };
 
-export default SignUp;
+export default UserAccountAction;
