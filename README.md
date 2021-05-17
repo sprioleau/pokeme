@@ -15,7 +15,7 @@ Deployed URL: [pokeme-cards.netlify.app](https://pokeme-cards.netlify.app/)
 - Digitally reproduced a Pokémon card
 - Used 3D card effect when the card is hovered
 - Interacted with [a random user API](https://randomuser.me/)
-- Made use of publically available resources for Pokémon data and cited in code
+- Made use of publicly available resources for Pokémon data and cited in code
 - Stitched together existing Pokémon logo with Pokéme name
 - Created card background texture
 - Implemented SVG background making use of [svgbackgrounds.com](https://www.svgbackgrounds.com/)
@@ -48,7 +48,7 @@ As a note, I implemented logic to keep the Redux state and database in sync.
 - Input validation for card fields
 
 ### Supercharged Title Field
-I took the lab further by ⚡️ supercharging the `title` field with a stringified JSON object with all the data needed to render a PokéMe card. I then parsed the data comping back from the database in order to render it out into the `Card` component. This apprroach also allowed me to store an additional `message` key, where I could store Markdown to be rendered in the UI.
+I took the lab further by ⚡️ supercharging the `title` field with a stringified JSON object with all the data needed to render a PokéMe card. I then parsed the data comping back from the database in order to render it out into the `Card` component. This approach also allowed me to store an additional `message` key, where I could store Markdown to be rendered in the UI.
 
 ## Screenshots
 
