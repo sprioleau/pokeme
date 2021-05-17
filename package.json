@@ -1,7 +1,7 @@
 {
-	"name": "starterpack-sprioleau",
+	"name": "pokeme-cards",
 	"version": "1.0.0",
-	"description": "*Starter pack for building web applications with React*",
+	"description": "*PokéMe Cards | Make yourself a Pokémon*",
 	"main": "src/index.js",
 	"scripts": {
 		"test": "eslint src",
