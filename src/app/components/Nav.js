@@ -1,15 +1,15 @@
-import React from "react";
+import { Box, Button, Wrap } from "@chakra-ui/react";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Box, Wrap } from "@chakra-ui/react";
-import { useHistory, useLocation, Link } from "react-router-dom";
+
 import { FiPlusSquare } from "react-icons/fi";
 import { GiCardRandom } from "react-icons/gi";
-import { IoTrashOutline } from "react-icons/io5";
-
+// import { IoTrashOutline } from "react-icons/io5";
+import React from "react";
 import { toast } from "react-toastify";
-import { toggleModalVisibility, generateCards, deleteAllCards, signOutUser } from "../store/actions";
-import { selectCards, selectIsAuthenticated } from "../store/selectors";
+import { selectIsAuthenticated } from "../store/selectors";
 import CardFormWrapper from "./form/CardFormWrapper";
+import { generateCards, signOutUser, toggleModalVisibility } from "../store/actions";
 
 const GENERATED_CARDS_QUANTITY = 1;
 
@@ -19,13 +19,13 @@ const Nav = () => {
   const { pathname } = useLocation();
   const isHome = pathname === "/" || pathname === "/cards";
 
-  const cards = useSelector(selectCards);
+  // const cards = useSelector(selectCards);
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
-  const handleRemoveAllCards = () => {
-    const ids = cards.map(({ id }) => id);
-    dispatch(deleteAllCards(ids, history));
-  };
+  // const handleRemoveAllCards = () => {
+  //   const ids = cards.map(({ id }) => id);
+  //   dispatch(deleteAllCards(ids, history));
+  // };
 
   const handleGenerateCards = () => {
     if (!isAuthenticated) {
@@ -84,13 +84,13 @@ const Nav = () => {
                 {`Generate ${GENERATED_CARDS_QUANTITY > 1 ? `${GENERATED_CARDS_QUANTITY} Cards` : "a Card"}`}
               </Button>
             </Box>
-            {cards.length > 0 && (
+            {/* {cards.length > 0 && (
               <Box p="4">
                 <Button type="button" className="btn" onClick={handleRemoveAllCards}>
                   <span className="btn-icon"><IoTrashOutline /></span>Drop all cards
                 </Button>
               </Box>
-            )}
+            )} */}
           </>
         )}
         <Box p="4">
