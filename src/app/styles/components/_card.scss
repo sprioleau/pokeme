@@ -30,7 +30,6 @@ $image-border-width: 0.25rem;
   @include setCardChildOffset("attack:nth-child(2)", 40);
   @include setCardChildOffset("icon", 50, 1.2);
   @include setCardChildOffset("utility-stats", 30);
-  @include setCardChildOffset("description", 40);
   @include setCardChildOffset("footer", 20);
 
   .card {
@@ -52,6 +51,11 @@ $image-border-width: 0.25rem;
   border-radius: $corner-radius-lg;
   padding: 1rem 1.5rem 0.75rem;
   font-size: 1.5rem;
+  transform-style: preserve-3d;
+  
+  & > * {
+    transform-style: preserve-3d;
+  }
 
   &.card-wrapper {
     border: none;
@@ -132,7 +136,6 @@ $image-border-width: 0.25rem;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 0.5rem;
-    transform-style: preserve-3d;
   }
 
   &__header-right {
@@ -163,7 +166,6 @@ $image-border-width: 0.25rem;
   &__image-wrapper {
     position: relative;
     width: 100%;
-    transform-style: preserve-3d;
     
     &::after {
       @include transition;
@@ -226,7 +228,6 @@ $image-border-width: 0.25rem;
   }
 
   &__attack {
-    transform-style: preserve-3d;
     display: flex;
     align-items: center;
     line-height: 0.7;
@@ -253,7 +254,6 @@ $image-border-width: 0.25rem;
 
   &__attack-name-description {
     @include transition;
-    transform-style: preserve-3d;
     margin-right: 0.5rem;
   }
 
@@ -284,7 +284,6 @@ $image-border-width: 0.25rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transform-style: preserve-3d;
 
     &:not(:last-child) {
       margin-right: 0.5rem;

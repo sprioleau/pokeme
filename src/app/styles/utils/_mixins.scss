@@ -104,6 +104,7 @@ $bp-large: 1180px;
 @mixin setCardChildOffset($child-suffix, $offset, $scale: 1) {
   .card__#{$child-suffix} {
 		@include transition(transform, 0.4s);
-    transform: translateZ(#{$offset}px) scale($scale);
+    transform: translate3d(0, 0, #{$offset}px) scale($scale);
+		transform-style: preserve-3d;
   }
 }
